@@ -1,0 +1,68 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary_press</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorAccent">#000</item>
+    </style>
+
+    <style name="EditorStyle">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">@dimen/editor_text_size</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/primary_press</item>
+        <item name="android:background">@drawable/text_style</item>
+    </style>
+
+    <style name="EditorStyle_Margin">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">@dimen/editor_text_size</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/primary_press</item>
+        <item name="android:layout_marginBottom">@dimen/component_margin</item>
+        <item name="android:background">@drawable/text_style</item>
+    </style>
+
+    <style name="TextViewStyle_Margin">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">@dimen/editor_text_size</item>
+        <item name="android:textColorHint">@color/primary_press</item>
+        <item name="android:layout_marginBottom">@dimen/component_margin</item>
+        <item name="android:background">@drawable/textview_style</item>
+    </style>
+
+    <style name="LabelStyle">
+        <item name="android:textColor">@color/label</item>
+        <item name="android:textSize">@dimen/label_text_size</item>
+        <item name="android:paddingLeft">2.0dip</item>
+        <item name="android:layout_marginBottom">@dimen/label_margin</item>
+    </style>
+
+    <style name="LabelStyle_Small">
+        <item name="android:textColor">@color/label</item>
+        <item name="android:textSize">@dimen/label_value_size</item>
+        <item name="android:paddingLeft">2.0dip</item>
+        <item name="android:layout_marginBottom">@dimen/component_margin</item>
+    </style>
+
+    <style name="LabelStyle_Small.More">
+        <item name="android:textColor">@color/label</item>
+        <item name="android:textSize">@dimen/label_text_size_3</item>
+        <item name="android:paddingLeft">2.0dip</item>
+        <item name="android:layout_marginBottom">@dimen/label_margin</item>
+    </style>
+
+    <style name="MyCustomDialog" parent="Theme.AppCompat.Light.Dialog">
+    </style>
+
+    <style name="SettingTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary_press</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorAccent">#000</item>
+        <item name="android:textSize">20dip</item>
+    </style>
+
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#fff</color>
+    <color name="highlight">#dbf3ff</color>
+    <color name="disabled">#d8d8d8</color>
+
+    <color name="background">#f5f5ed</color>
+
+    <color name="color_pass">#00ba1d</color>
+    <color name="color_fail">#e41</color>
+    <color name="color_ready">#235973</color>
+    <color name="color_applicable">#6d868b</color>
+    <color name="color_verify">#e6c225</color>
+
+    <color name="primary">#235973</color>
+    <color name="primary_gray">#efefef</color>
+    <color name="primary_press">#3680a4</color>
+    <color name="secondary">#eee9d6</color>
+
+    <color name="form_divier">#476973</color>
+    <color name="footer_divier">#6d868b</color>
+
+    <color name="progress_bar">#c1e700</color>
+    <color name="label">#111</color>
+
+    <color name="mdtp_accent_color">#235973</color>
+    <color name="mdtp_accent_color_dark">#3680a4</color>
+
+    <color name="mask_text">#3680a4</color>
+</resources>

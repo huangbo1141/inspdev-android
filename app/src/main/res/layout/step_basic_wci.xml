@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbarStyle="outsideOverlay">
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/form_padding">
+
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/community" />
+
+        <EditText
+            android:id="@+id/txt_community"
+            style="@style/EditorStyle_Margin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:enabled="false"
+            android:maxLines="1"
+            android:inputType="text"/>
+
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lot" />
+
+        <EditText
+            android:id="@+id/txt_lot"
+            style="@style/EditorStyle_Margin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:inputType="number"
+            android:enabled="false"
+            android:maxLines="1"/>
+
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/address" />
+
+        <EditText
+            android:id="@+id/txt_address"
+            style="@style/EditorStyle_Margin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:enabled="false"
+            android:maxLines="1" />
+
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/job_number" />
+
+        <EditText
+            android:id="@+id/txt_job_number"
+            style="@style/EditorStyle_Margin"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:maxLines="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1.0dip"
+            android:layout_marginBottom="@dimen/component_margin"
+            android:layout_marginTop="@dimen/component_margin"
+            android:background="@color/primary"
+            android:orientation="horizontal"></LinearLayout>
+
+
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/is_house_ready_inspection" />
+
+        <Spinner
+            android:id="@+id/spinner_ready_inspection"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:background="@drawable/spinner_style"
+            android:spinnerMode="dialog"></Spinner>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1.0dip"
+            android:layout_marginBottom="@dimen/component_margin"
+            android:layout_marginTop="@dimen/component_last_margin"
+            android:background="@color/primary"
+            android:orientation="horizontal"></LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/btn_gps"
+                android:layout_centerVertical="true"
+                android:text="@string/capture_gps_location" />
+
+            <ImageView
+                android:id="@+id/btn_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/form_margin"
+                android:background="@drawable/gps_selector"
+                android:padding="2dip" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_gps_location"
+            style="@style/TextViewStyle_Margin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:textSize="@dimen/view_text_size"
+            android:gravity="center"
+            android:maxLines="1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/btn_picture"
+                android:layout_centerVertical="true"
+                android:text="@string/picture_of_front_building" />
+
+            <ImageView
+                android:id="@+id/btn_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/form_margin"
+                android:background="@drawable/menu_selector"
+                android:padding="2dip" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_front_building"
+            style="@style/TextViewStyle_Margin"
+            android:gravity="center"
+            android:textSize="@dimen/view_text_size"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:maxLines="1" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cond_area" />
+
+            <EditText
+                android:id="@+id/txt_area"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:enabled="false"
+                android:maxLines="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cond_volume" />
+
+            <EditText
+                android:id="@+id/txt_volume"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:enabled="false"
+                android:maxLines="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wall_area" />
+
+            <EditText
+                android:id="@+id/txt_wall_area"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:enabled="false"
+                android:maxLines="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ceiling_area" />
+
+            <EditText
+                android:id="@+id/txt_ceiling_area"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:enabled="false"
+                android:maxLines="1" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/btn_testing_setup"
+                android:layout_centerVertical="true"
+                android:text="@string/testing_setup_photo" />
+
+            <ImageView
+                android:id="@+id/btn_testing_setup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/form_margin"
+                android:background="@drawable/menu_selector"
+                android:padding="2dip" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_manometer"
+            style="@style/TextViewStyle_Margin"
+            android:gravity="center"
+            android:textSize="@dimen/view_text_size"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:maxLines="1" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/btn_manometer"
+                android:layout_centerVertical="true"
+                android:text="@string/manometer_photo" />
+
+            <ImageView
+                android:id="@+id/btn_manometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/form_margin"
+                android:background="@drawable/menu_selector"
+                android:padding="2dip" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_testing_setup"
+            style="@style/TextViewStyle_Margin"
+            android:gravity="center"
+            android:textSize="@dimen/view_text_size"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:maxLines="1" />
+
+    </LinearLayout>
+
+</ScrollView>

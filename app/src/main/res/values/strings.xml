@@ -1,0 +1,200 @@
+<resources>
+    <string name="app_name">Inspections</string>
+
+    <string name="app_title">Inspections</string>
+
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="user_profile">User Profile</string>
+    <string name="log_out">Log Out</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+
+    <string name="update_profile">Update Profile</string>
+    <string name="user_register">User Register</string>
+
+    <string name="enter_email">Enter your email address</string>
+    <string name="enter_firstname">Enter your first name</string>
+    <string name="enter_lastname">Enter your last name</string>
+    <string name="enter_phone">Enter your phone number</string>
+    <string name="enter_address">Enter your address</string>
+    <string name="enter_old_password">Enter old password</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="confirm_password_2">Confirm new password</string>
+    <string name="enter_job_number">Enter job number</string>
+
+    <string name="lath_plane_inspection">Lath Inspection</string>
+    <string name="drainage_plane_inspection">Drainage Plane Inspection</string>
+    <string name="inspection_list">Inspection List</string>
+    <string name="locations">Locations</string>
+    <string name="additional_information">Additional Information</string>
+    <string name="email_list">Email List</string>
+
+    <string name="lath_plane_inspection_2">Lath Inspection</string>
+    <string name="drainage_plane_inspection_2">Drainage Plane\nInspection</string>
+    <string name="sync_inspection">Sync Inspection</string>
+    <string name="assigned_inspection">Assigned Inspections</string>
+
+    <string name="community">Community</string>
+    <string name="lot">Lot #</string>
+    <string name="address">Address</string>
+    <string name="job_number">Job Number</string>
+    <string name="username">Username</string>
+    <string name="email_address">Email Address</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+
+    <string name="date_of_inspection">Date of Inspection</string>
+    <string name="inspector_initials">Inspector Initials</string>
+    <string name="inspector_signature">Inspector Signature</string>
+    <string name="region">Region</string>
+    <string name="field_manager">Field Manager</string>
+    <string name="is_house_ready_inspection">Is the house ready for inspection?</string>
+    <string name="picture_of_front_building">Picture of Front of Building</string>
+
+    <string name="failed_picture_1">1st Picture of Exception</string>
+    <string name="failed_picture_2">2nd Picture of Exception</string>
+    <string name="failed_picture_3">3rd Picture of Exception</string>
+    <string name="failed_picture_4">4th Picture of Exception</string>
+
+    <string name="primary_picture">Primary Photo</string>
+    <string name="secondary_picture">Secondary Photo</string>
+
+    <string name="capture_gps_location">Capture GPS Location</string>
+    <string name="location_captured">Location Captured</string>
+    <string name="location_not_captured">Location Unavailable</string>
+
+    <string name="placeholder_email_list">Please add to receive a copy of submission, you may then enter and add other email addresses you want to receive a copy of the submission:</string>
+    <string name="placeholder_location">Please add location to report checking list of inspection:</string>
+    <string name="recipient_email">Recipient Email:</string>
+    <string name="selected_location">Selected Location:</string>
+
+    <string name="overall_comments">Overall Comments</string>
+    <string name="result">Result</string>
+    <string name="status">Status</string>
+    <string name="comment_description">Comment/Description</string>
+
+    <string name="error__empty_firstname">Please input first name</string>
+    <string name="error__empty_lastname">Please input last name</string>
+    <string name="error__empty_email">Please input email address</string>
+    <string name="error__empty_phone">Please input phone number</string>
+    <string name="error__exist_email">Your email address have already exist!</string>
+    <string name="error__empty_password">Please input password</string>
+    <string name="error__equal_password">Please input correct password!</string>
+    <string name="error__empty_job_number">Please input job number</string>
+    <string name="error__wrong_job_number">Invalid Job Number</string>
+
+    <string name="error__empty_community">Please Input Community</string>
+    <string name="error__empty_lot">Please Input LOT</string>
+    <string name="error__empty_address">Please Input Address</string>
+    <string name="error__empty_comments">Please Input Overall Comments</string>
+    <string name="error__empty_result">Please Select Result</string>
+    <string name="error__empty_signature">Please sign this inspection!</string>
+    <string name="error__empty_recipient_email">Please add email address</string>
+    <string name="error__empty_location">Please Select Location</string>
+    <string name="error__empty_photo">Please Select Image</string>
+    <string name="error__empty_comment">Please Input Comments</string>
+
+    <string name="error__empty_region">Please Select Region</string>
+    <string name="error__another_region">There is no Field Manager in this Region</string>
+    <string name="error__empty_field_manager">Please Select Field Manager</string>
+
+    <string name="error__empty_initials">Please Input Inspector Initials</string>
+
+    <string name="alert__success">Successfully submitted!</string>
+    <string name="alert__failed">Failed to submit. Please try again later!</string>
+
+    <string-array name="yes_no">
+        <item>No</item>
+        <item>Yes</item>
+    </string-array>
+
+    <string-array name="result_list">
+        <item></item>
+        <item>Pass</item>
+        <item>Pass with exception</item>
+        <item>Fail</item>
+    </string-array>
+
+    <string-array name="locations">
+        <item></item>
+        <item>Left</item>
+        <item>Right</item>
+        <item>Front</item>
+        <item>Back</item>
+    </string-array>
+
+    <string-array name="status_list">
+        <item></item>
+        <item>Pass</item>
+        <item>Fail</item>
+        <item>Not Ready</item>
+        <item>Not Applicable</item>
+        <item>Cannot Verify</item>
+    </string-array>
+
+    <string-array name="resolution">
+        <item>No Changes</item>
+        <item>1600 x 2560</item>
+        <item>1536 x 2048</item>
+        <item>1200 x 1920</item>
+        <item>1152 x 1920</item>
+        <item>1152 x 1536</item>
+        <item> 768 x 1280</item>
+        <item> 768 x 1024</item>
+        <item> 600 x 1024</item>
+        <item> 640 x 960</item>
+        <item> 480 x 854</item>
+        <item> 480 x 800</item>
+        <item> 480 x 640</item>
+        <item> 320 x 480</item>
+        <item> 240 x 432</item>
+        <item> 240 x 400</item>
+    </string-array>
+
+    <string-array name="resolution_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+    </string-array>
+
+    <string name="cond_area">Cond. Floor Area</string>
+    <string name="cond_volume">Cond. Volume</string>
+    <string name="wall_area">Wall Area</string>
+    <string name="ceiling_area">Ceiling Area</string>
+
+    <string name="testing_setup_photo">Duct Testing Setup Photo</string>
+    <string name="manometer_photo">Manometer Photo</string>
+
+    <string name="house_pressure">House Pressure</string>
+    <string name="flow">Flow</string>
+
+    <string name="qn">Qn</string>
+    <string name="qn_out">Qn. Out</string>
+    <string name="ach50">ACH50</string>
+
+    <string name="duct_leakage_result">Duct Leakage Result</string>
+    <string name="envelop_leakage_result">Envelope Leakage Result</string>
+
+</resources>

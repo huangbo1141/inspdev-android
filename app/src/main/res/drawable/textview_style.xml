@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:innerRadius="@dimen/editor_padding" >
+
+    <solid android:color="@color/primary_gray" />
+    <stroke android:width="1.0dip" android:color="@color/primary" />
+
+    <corners
+        android:radius="@dimen/editor_border_radius"/>
+
+    <padding
+        android:bottom="@dimen/editor_padding"
+        android:left="@dimen/editor_padding"
+        android:right="@dimen/editor_padding"
+        android:top="@dimen/editor_padding" />
+
+</shape>

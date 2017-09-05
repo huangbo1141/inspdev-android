@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbarStyle="outsideOverlay">
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/form_padding">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit 1 Supply *" />
+
+            <EditText
+                android:id="@+id/txt_unit1_supply"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:maxLength="3"
+                android:inputType="number"/>
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit 1 Return *" />
+
+            <EditText
+                android:id="@+id/txt_unit1_return"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:maxLength="3"
+                android:inputType="number"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit 2 Supply" />
+
+            <EditText
+                android:id="@+id/txt_unit2_supply"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:maxLength="3"
+                android:inputType="number"/>
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit 2 Return" />
+
+            <EditText
+                android:id="@+id/txt_unit2_return"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:maxLength="3"
+                android:inputType="number"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit 3 Supply" />
+
+            <EditText
+                android:id="@+id/txt_unit3_supply"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:maxLength="3"
+                android:inputType="number"/>
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit 3 Return" />
+
+            <EditText
+                android:id="@+id/txt_unit3_return"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:maxLength="3"
+                android:inputType="number"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit 4 Supply" />
+
+            <EditText
+                android:id="@+id/txt_unit4_supply"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:maxLength="3"
+                android:inputType="number"/>
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit 4 Return" />
+
+            <EditText
+                android:id="@+id/txt_unit4_return"
+                style="@style/EditorStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:maxLength="3"
+                android:inputType="number"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

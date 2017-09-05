@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="INSPECTION CONFIGURATION">
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/resolution"
+            android:entryValues="@array/resolution_value"
+            android:key="resolution"
+            android:summary="Select the image resolution"
+            android:title="Image Resolution" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

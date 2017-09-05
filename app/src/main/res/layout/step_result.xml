@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbarStyle="outsideOverlay">
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/form_padding"
+        android:paddingTop="@dimen/form_padding">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/form_padding"
+            android:paddingRight="@dimen/form_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:text="@string/overall_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/txt_comments"
+                style="@style/EditorStyle_Margin"
+                android:maxLines="1"
+                android:gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/multiple_editor_height" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/comment_list"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/form_small_padding"
+            android:paddingRight="@dimen/form_small_padding"
+            android:paddingTop="@dimen/form_padding"
+            android:paddingBottom="@dimen/form_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingTop="@dimen/form_padding"
+            android:paddingLeft="@dimen/form_padding"
+            android:paddingRight="@dimen/form_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:text="@string/result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/spinner_result"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:background="@drawable/spinner_style"
+                android:layout_marginBottom="@dimen/component_margin"
+                android:spinnerMode="dialog"></Spinner>
+
+            <LinearLayout
+                android:id="@+id/layout_exception_picture"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/LabelStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/btn_1_picture"
+                        android:layout_centerVertical="true"
+                        android:text="@string/failed_picture_1" />
+
+                    <ImageView
+                        android:id="@+id/btn_1_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/form_margin"
+                        android:background="@drawable/menu_selector"
+                        android:padding="2dip" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_1_picture"
+                    style="@style/TextViewStyle_Margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/view_text_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_height" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/LabelStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/btn_2_picture"
+                        android:layout_centerVertical="true"
+                        android:text="@string/failed_picture_2" />
+
+                    <ImageView
+                        android:id="@+id/btn_2_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/form_margin"
+                        android:background="@drawable/menu_selector"
+                        android:padding="2dip" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_2_picture"
+                    style="@style/TextViewStyle_Margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/view_text_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_height" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/LabelStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/btn_3_picture"
+                        android:layout_centerVertical="true"
+                        android:text="@string/failed_picture_3" />
+
+                    <ImageView
+                        android:id="@+id/btn_3_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/form_margin"
+                        android:background="@drawable/menu_selector"
+                        android:padding="2dip" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_3_picture"
+                    style="@style/TextViewStyle_Margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/view_text_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_height" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/LabelStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/btn_4_picture"
+                        android:layout_centerVertical="true"
+                        android:text="@string/failed_picture_4" />
+
+                    <ImageView
+                        android:id="@+id/btn_4_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/form_margin"
+                        android:background="@drawable/menu_selector"
+                        android:padding="2dip" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_4_picture"
+                    style="@style/TextViewStyle_Margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/view_text_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_height" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/LabelStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/btn_picture"
+                    android:layout_centerVertical="true"
+                    android:text="@string/inspector_signature" />
+
+                <ImageView
+                    android:id="@+id/btn_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/form_margin"
+                    android:background="@drawable/menu_selector"
+                    android:padding="2dip" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_signature"
+                style="@style/TextViewStyle_Margin"
+                android:gravity="center"
+                android:textSize="@dimen/view_text_size"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:maxLines="1" />
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date_of_inspection" />
+
+            <TextView
+                android:id="@+id/txt_inspection_date"
+                style="@style/TextViewStyle_Margin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height"
+                android:gravity="center"
+                android:maxLines="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

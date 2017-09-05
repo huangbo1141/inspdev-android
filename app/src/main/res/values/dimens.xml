@@ -1,0 +1,65 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="app_title_size">45.0dip</dimen>
+    <dimen name="app_title_size_2">36.0dip</dimen>
+    <dimen name="app_title_size_3">28.0dip</dimen>
+
+    <dimen name="button_border_radius">5.0dip</dimen>
+    <dimen name="button_text_size">22.0dip</dimen>
+    <dimen name="button_height">48.0dip</dimen>
+    <dimen name="button_text_size_2">24.0dip</dimen>
+    <dimen name="button_text_size_3">20.0dip</dimen>
+    <dimen name="button_text_size_4">12.0dip</dimen>
+    <dimen name="button_height_2">56.0dip</dimen>
+    <dimen name="button_height_3">84.0dip</dimen>
+    <dimen name="button_height_4">32.0dip</dimen>
+    <dimen name="button_height_5">64.0dip</dimen>
+    <dimen name="button_margin">5.0dip</dimen>
+
+    <dimen name="editor_border_radius">6.0dip</dimen>
+    <dimen name="editor_padding">10.0dip</dimen>
+    <dimen name="editor_text_size">20.0dip</dimen>
+    <dimen name="view_text_size">15.6dip</dimen>
+    <dimen name="editor_height">52.0dip</dimen>
+    <dimen name="multiple_editor_height">120.0dip</dimen>
+
+    <dimen name="label_text_size">20.0dip</dimen>
+    <dimen name="label_text_size_2">24.0dip</dimen>
+    <dimen name="label_value_size">18.0dip</dimen>
+    <dimen name="label_text_size_3">16.0dip</dimen>
+    <dimen name="label_margin">5.0dip</dimen>
+    <dimen name="label_margin_2">8.0dip</dimen>
+
+    <dimen name="component_margin_0">4.0dip</dimen>
+    <dimen name="component_margin">10.0dip</dimen>
+    <dimen name="component_margin_2">15.0dip</dimen>
+    <dimen name="component_last_margin">18.0dip</dimen>
+    <dimen name="component_last_margin_2">20.0dip</dimen>
+
+    <dimen name="form_title">24.0dip</dimen>
+    <dimen name="form_padding">8.0dip</dimen>
+    <dimen name="form_small_padding">4.0dip</dimen>
+    <dimen name="form_margin">5.0dip</dimen>
+
+    <dimen name="header_height">72.0dip</dimen>
+
+    <dimen name="footer_height">52.0dip</dimen>
+    <dimen name="footer_button_width">124.0dip</dimen>
+    <dimen name="footer_button_padding">8.0dip</dimen>
+    <dimen name="footer_button_left_padding">16.0dip</dimen>
+    <dimen name="footer_button_text_size">19.0dip</dimen>
+
+    <dimen name="footer_progress_text_size">17.0dip</dimen>
+    <dimen name="footer_progress_text_width">50.0dip</dimen>
+    <dimen name="footer_padding">10.0dip</dimen>
+    <dimen name="footer_progress_height">12.0dip</dimen>
+
+    <dimen name="image_picker_size">65dp</dimen>
+    <dimen name="signature_height">142.0dip</dimen>
+
+    <dimen name="status_width">96.0dip</dimen>
+
+</resources>

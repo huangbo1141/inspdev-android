@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbarStyle="outsideOverlay"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/form_padding">
+
+        <TextView
+            android:id="@+id/txt_checking_title"
+            style="@style/LabelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/label_text_size_2"
+            android:text="" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1.0dip"
+            android:layout_marginBottom="@dimen/component_margin"
+            android:layout_marginTop="@dimen/component_margin"
+            android:background="@color/primary"
+            android:orientation="horizontal"></LinearLayout>
+
+
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/status" />
+
+        <Spinner
+            android:id="@+id/spinner_status"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:layout_marginBottom="@dimen/component_margin"
+            android:background="@drawable/spinner_style"
+            android:spinnerMode="dialog"></Spinner>
+
+        <LinearLayout
+            android:id="@+id/layout_picture"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/LabelStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/btn_primary_picture"
+                    android:layout_centerVertical="true"
+                    android:text="@string/primary_picture" />
+
+                <ImageView
+                    android:id="@+id/btn_primary_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/form_margin"
+                    android:background="@drawable/menu_selector"
+                    android:padding="2dip" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_primary_picture"
+                style="@style/TextViewStyle_Margin"
+                android:gravity="center"
+                android:textSize="@dimen/view_text_size"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/LabelStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/btn_secondary_picture"
+                    android:layout_centerVertical="true"
+                    android:text="@string/secondary_picture" />
+
+                <ImageView
+                    android:id="@+id/btn_secondary_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/form_margin"
+                    android:background="@drawable/menu_selector"
+                    android:padding="2dip" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_secondary_picture"
+                style="@style/TextViewStyle_Margin"
+                android:gravity="center"
+                android:textSize="@dimen/view_text_size"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editor_height" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_comment"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:text="@string/comment_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/txt_comment"
+                style="@style/EditorStyle_Margin"
+                android:singleLine="false"
+                android:gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/multiple_editor_height" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
