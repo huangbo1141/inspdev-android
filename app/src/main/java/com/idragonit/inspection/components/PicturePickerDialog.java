@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.Window;
 
+import com.idragonit.inspection.AppData;
 import com.idragonit.inspection.Constants;
 import com.idragonit.inspection.R;
 
@@ -56,11 +57,13 @@ public class PicturePickerDialog extends Dialog implements View.OnClickListener{
 
         switch (v.getId()){
             case R.id.btn_camera:
+                AppData.saveGallery = true;
                 mListener.onCamera();
                 dismiss();
                 break;
 
             case R.id.btn_gallery:
+                AppData.saveGallery = false;
                 mListener.onGallery();
                 dismiss();
                 break;

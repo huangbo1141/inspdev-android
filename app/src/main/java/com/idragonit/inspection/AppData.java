@@ -21,6 +21,7 @@ public class AppData {
 
     public static int MODE = 0;
     public static int KIND = 0;
+    public static boolean saveGallery = false;
 
     public static String TAKEN_PICTURE = "";
     public static int TAKEN_KIND = 0;
@@ -60,6 +61,8 @@ public class AppData {
         STORAGE.init();
         COMMENT.init();
         UNITS.clear();
+
+
     }
 
     public static void init(int mode) {
@@ -287,6 +290,21 @@ public class AppData {
         try {
             JSONArray result = new JSONArray(json);
             for (int i=0; i<result.length(); i++) {
+                String string = result.getString(i);
+
+                UnitInfo unit = new UnitInfo();
+                unit.initWithJSON(string);
+
+                setUnit(unit);
+            }
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONArray result = new JSONArray(json);
+            for (int i=0; i<result.length(); i++) {
                 JSONObject obj = result.getJSONObject(i);
 
                 UnitInfo unit = new UnitInfo();
@@ -294,7 +312,12 @@ public class AppData {
 
                 setUnit(unit);
             }
-        } catch (Exception e) {}
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }

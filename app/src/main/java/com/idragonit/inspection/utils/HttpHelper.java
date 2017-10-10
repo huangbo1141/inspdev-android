@@ -1,15 +1,29 @@
 package com.idragonit.inspection.utils;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
+import com.idragonit.inspection.AppData;
 import com.idragonit.inspection.Constants;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.client.HttpClient;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -27,11 +41,43 @@ public class HttpHelper {
     public interface OnResponseListener {
         public void onResponse(JSONObject response);
     }
+    private static String filterUrl(String url){
+        String ret;
+        ret = url.replace("https","http");
+        return ret;
+    }
+    public static void UploadFile(Context context, String url, String filePath, final OnResponseListener listener) {
+//        HttpHelper helper = new HttpHelper();
+//        helper.responseListener = listener;
+//        helper.UploadFileTask(url, filePath);
 
-    public static void UploadFile(String url, String filePath, OnResponseListener listener) {
-        HttpHelper helper = new HttpHelper();
-        helper.responseListener = listener;
-        helper.UploadFileTask(url, filePath);
+//        url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE;
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(Constants.CONNECTION_TIMEOUT * 1000);
+        client.setSSLSocketFactory(SecurityUtils.getSSLSocketFactory());
+        File myFile = new File(filePath);
+        RequestParams params = new RequestParams();
+        try {
+//            params.put("wci", "wci");
+//            params.put("signature", "signature");
+            params.put("file", myFile);
+
+            client.post(context,url,params,new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                    super.onSuccess(statusCode, headers, response);
+                    listener.onResponse(response);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                    super.onFailure(statusCode, headers, responseString, throwable);
+                    listener.onResponse(null);
+                }
+            });
+        } catch(Exception e) {
+            listener.onResponse(null);
+        }
     }
 
     private void UploadFileTask(String url, String filePath) {
@@ -47,7 +93,13 @@ public class HttpHelper {
             try {
                 //////////////////////////////////////////////
                 // OKHttp code
-                OkHttpClient client = new OkHttpClient().newBuilder().writeTimeout(Constants.CONNECTION_TIMEOUT, TimeUnit.SECONDS).readTimeout(Constants.CONNECTION_TIMEOUT, TimeUnit.SECONDS).connectTimeout(Constants.CONNECTION_TIMEOUT, TimeUnit.SECONDS).build();
+                OkHttpClient client = new OkHttpClient().newBuilder()
+                        .writeTimeout(Constants.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+                        .readTimeout(Constants.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+                        .connectTimeout(Constants.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+                        .build();
+
+//                OkHttpClient client = SecurityUtils.CustomTrust2();
                 MediaType MEDIA_TYPE_IMAGE = MediaType.parse("image/*");
 
                 File file = new File(filePath);

@@ -18,6 +18,20 @@
             style="@style/LabelStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/permit_number" />
+
+        <EditText
+            android:id="@+id/txt_permit_number"
+            style="@style/EditorStyle_Margin"
+            android:enabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:inputType="number"
+            android:maxLines="1" />
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/community" />
 
         <EditText
@@ -252,73 +266,80 @@
 
         </LinearLayout>
 
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/LabelStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/btn_testing_setup"
+                    android:layout_centerVertical="true"
+                    android:text="@string/testing_setup_photo" />
+
+                <ImageView
+                    android:id="@+id/btn_testing_setup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/form_margin"
+                    android:background="@drawable/menu_selector"
+                    android:padding="2dip" />
+
+            </RelativeLayout>
 
             <TextView
-                style="@style/LabelStyle"
+                android:id="@+id/txt_manometer"
+                style="@style/TextViewStyle_Margin"
+                android:gravity="center"
+                android:textSize="@dimen/view_text_size"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/btn_testing_setup"
-                android:layout_centerVertical="true"
-                android:text="@string/testing_setup_photo" />
-
-            <ImageView
-                android:id="@+id/btn_testing_setup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/form_margin"
-                android:background="@drawable/menu_selector"
-                android:padding="2dip" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/txt_manometer"
-            style="@style/TextViewStyle_Margin"
-            android:gravity="center"
-            android:textSize="@dimen/view_text_size"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/editor_height"
-            android:maxLines="1" />
+                android:layout_height="@dimen/editor_height"
+                android:maxLines="1" />
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/LabelStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/btn_manometer"
+                    android:layout_centerVertical="true"
+                    android:text="@string/manometer_photo" />
+
+                <ImageView
+                    android:id="@+id/btn_manometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/form_margin"
+                    android:background="@drawable/menu_selector"
+                    android:padding="2dip" />
+
+            </RelativeLayout>
 
             <TextView
-                style="@style/LabelStyle"
+                android:id="@+id/txt_testing_setup"
+                style="@style/TextViewStyle_Margin"
+                android:gravity="center"
+                android:textSize="@dimen/view_text_size"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/btn_manometer"
-                android:layout_centerVertical="true"
-                android:text="@string/manometer_photo" />
+                android:layout_height="@dimen/editor_height"
+                android:maxLines="1" />
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/btn_manometer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/form_margin"
-                android:background="@drawable/menu_selector"
-                android:padding="2dip" />
 
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/txt_testing_setup"
-            style="@style/TextViewStyle_Margin"
-            android:gravity="center"
-            android:textSize="@dimen/view_text_size"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/editor_height"
-            android:maxLines="1" />
 
     </LinearLayout>
 

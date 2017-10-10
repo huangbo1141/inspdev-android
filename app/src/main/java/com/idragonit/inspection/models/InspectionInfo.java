@@ -1,5 +1,6 @@
 package com.idragonit.inspection.models;
 
+import com.idragonit.inspection.AppData;
 import com.idragonit.inspection.Constants;
 import com.idragonit.inspection.utils.Utils;
 
@@ -193,6 +194,16 @@ public class InspectionInfo {
         ach50 = "";
 
         is_building_unit = false;
+
+        if (AppData.sys_energy_inspection.containsKey(Constants.SYS_HOUSE_PRESSURE)){
+            String pressure = (String) AppData.sys_energy_inspection.get(Constants.SYS_HOUSE_PRESSURE);
+            try{
+                house_pressure = Float.parseFloat(pressure);
+            }catch (Exception ex){
+
+            }
+
+        }
     }
 
     public String toJSON() {
@@ -247,6 +258,20 @@ public class InspectionInfo {
             result.put("ach50", ach50+"");
 
             result.put("is_bu", is_building_unit ? "1" : "0");
+
+            if (community!=null){
+                result.put("community",community);
+            }
+            if (community_name!=null){
+                result.put("community_name",community_name);
+            }
+
+            if (permit_number!=null){
+                result.put("permit_number",permit_number);
+            }
+
+
+
 
             return result.toString();
         } catch (Exception e) {}
@@ -344,6 +369,24 @@ public class InspectionInfo {
                 }
             }catch (Exception eddfd) {}
 
+
+            try{
+                community = result.getString("community");
+            }catch (Exception ex){
+
+            }
+
+            try{
+                community_name = result.getString("community_name");
+            }catch (Exception ex){
+
+            }
+            try{
+                permit_number = result.getString("permit_number");
+            }catch (Exception ex){
+
+            }
+
         } catch (Exception e) {}
     }
 
@@ -397,4 +440,6 @@ public class InspectionInfo {
 
         return community_name;
     }
+
+    public String permit_number;
 }

@@ -155,7 +155,7 @@ public class Done extends BaseFragment {
                 // Modified by Bongbong. 20160416
                 String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/front";
                 String path = AppData.INSPECTION.front_building.image;
-                HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -214,7 +214,7 @@ public class Done extends BaseFragment {
                 // Modified by Bongbong. 20160416
                 String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/signature";
                 String path = AppData.INSPECTION.signature.image;
-                HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -287,7 +287,7 @@ public class Done extends BaseFragment {
                     // Modified by Bongbong. 20160416
                     String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/exception";
                     String path = AppData.INSPECTION.exception_1.image;
-                    HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                    HttpHelper.UploadFile(getActivity(), url, path, new HttpHelper.OnResponseListener() {
                         @Override
                         public void onResponse(JSONObject response) {
 
@@ -342,7 +342,7 @@ public class Done extends BaseFragment {
                     // Modified by Bongbong. 20160416
                     String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/exception";
                     String path = AppData.INSPECTION.exception_2.image;
-                    HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                    HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                         @Override
                         public void onResponse(JSONObject response) {
 
@@ -397,7 +397,7 @@ public class Done extends BaseFragment {
                     // Modified by Bongbong. 20160416
                     String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/exception";
                     String path = AppData.INSPECTION.exception_3.image;
-                    HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                    HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                         @Override
                         public void onResponse(JSONObject response) {
 
@@ -450,7 +450,7 @@ public class Done extends BaseFragment {
                 try {
                     String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/exception";
                     String path = AppData.INSPECTION.exception_4.image;
-                    HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                    HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                         @Override
                         public void onResponse(JSONObject response) {
 
@@ -579,7 +579,7 @@ public class Done extends BaseFragment {
             // Modified by Bongbong. 20160416
             String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/checklist";
             String path = AppData.LOCATIONS.get(arg1).checking_list.get(arg2).primary.image;
-            HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+            HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                 @Override
                 public void onResponse(JSONObject response) {
 
@@ -637,7 +637,7 @@ public class Done extends BaseFragment {
             // Modified by Bongbong. 20160416
             String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/checklist";
             String path = AppData.LOCATIONS.get(arg1).checking_list.get(arg2).secondary.image;
-            HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+            HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                 @Override
                 public void onResponse(JSONObject response) {
 
@@ -727,7 +727,7 @@ public class Done extends BaseFragment {
             // Modified by Bongbong. 20160416
             String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/comment";
             String path = AppData.COMMENT.checking_list.get(arg).primary.image;
-            HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+            HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                 @Override
                 public void onResponse(JSONObject response) {
 
@@ -782,7 +782,7 @@ public class Done extends BaseFragment {
             // Modified by Bongbong. 20160416
             String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/comment";
             String path = AppData.COMMENT.checking_list.get(arg).secondary.image;
-            HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+            HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                 @Override
                 public void onResponse(JSONObject response) {
 
@@ -866,6 +866,7 @@ public class Done extends BaseFragment {
             req.put("requested_id", AppData.INSPECTION_REQUESTED_ID);
             if (AppData.INSPECTION_EDIT_ID!=0)
                 req.put("inspection_id", AppData.INSPECTION_EDIT_ID);
+
 
             req.put("job_number", AppData.INSPECTION.job_number);
             req.put("community", AppData.INSPECTION.community);

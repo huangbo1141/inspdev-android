@@ -201,6 +201,10 @@ public class Result_Step extends BaseFragment implements View.OnClickListener, D
         int y = 0;
 
         mText_Comments.setText(AppData.INSPECTION.overall_comments);
+
+        mText_Comments.setHorizontallyScrolling(false);
+        mText_Comments.setMaxLines(Integer.MAX_VALUE);
+
         mText_InspectionDate.setText(AppData.INSPECTION.inspection_date_last);
         mSpinner_Result.setSelection(AppData.INSPECTION.result);
 

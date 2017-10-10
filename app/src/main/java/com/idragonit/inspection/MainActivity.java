@@ -1,14 +1,29 @@
 package com.idragonit.inspection;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.idragonit.inspection.components.InspectionAdapterListener;
 import com.idragonit.inspection.components.RequestedInspectionAdapter;
 import com.idragonit.inspection.models.RequestedInspectionInfo;
@@ -39,6 +54,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     ListView mListView;
     RequestedInspectionAdapter mAdapter;
 
+    RelativeLayout mRoot;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +66,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mListView = (ListView) findViewById(R.id.list);
         mListView.setAdapter(mAdapter);
 
+        mRoot = (RelativeLayout) findViewById(R.id.root);
 //        findViewById(R.id.btn_drainage).setOnClickListener(this);
 //        findViewById(R.id.btn_lath).setOnClickListener(this);
         findViewById(R.id.btn_sync).setOnClickListener(this);
@@ -74,6 +92,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                             case R.id.menu_logout:
                                 onLogout();
                                 break;
+                            case R.id.menu_about:
+                                onAbout();
+                                break;
                         }
                     }
                 });
@@ -82,6 +103,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
 
         init();
+        checkPermission();
+    }
+
+    public void checkPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, 200);
+        }
     }
 
     private void init() {
@@ -128,6 +161,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         LoginManager.logout(this);
 
         showActivity(LoginActivity.class, Constants.ANIMATION_RIGHT_TO_LEFT);
+    }
+    PopupWindow mPopupWindow;
+    private void onAbout(){
+        if (true){
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.layout_about,null);
+
+            TextView appVersion = (TextView) customView.findViewById(R.id.txtAppVersion);
+            appVersion.setText(DeviceUtils.getVersion(MainActivity.this));
+
+            TextView credit = (TextView) customView.findViewById(R.id.txtCredit);
+            credit.setText(String.valueOf(Constants.CREDITS));
+
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+                    .customView(customView,false)
+                    .title("About")
+                    .positiveText("OK")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                        }
+                    });
+            builder.show();
+
+
+        }
     }
 
     private void onInspection(int kind) {
@@ -409,8 +471,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onSubmit(RequestedInspectionInfo item) {
+//        String message = (String) AppData.sys_energy_inspection.get(Constants.SYS_HOME_MESSAGE1);
+//        MaterialDialog.Builder builder = new MaterialDialog.Builder(MainActivity.this)
+//                .title(message)
+//                .positiveText("OK")
+//                .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//
+//                    }
+//                });
+//        builder.show();
 
-        onInspection(item);
+        if (item.inspection_date.equals(Utils.getToday("-"))){
+            // today item
+            onInspection(item);
+        }else{
+            String message = (String) AppData.sys_energy_inspection.get(Constants.SYS_HOME_MESSAGE1);
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(MainActivity.this)
+                    .content(message)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                        }
+                    });
+            builder.show();
+        }
+
     }
 
     private void onRefresh() {

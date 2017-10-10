@@ -54,7 +54,7 @@ public class ResultWCI_Step extends BaseFragment implements View.OnClickListener
     TextView mText_Signature;
     PictureInfo mPicture_Signature;
 
-    MaskedEditText mText_Pressure, mText_Flow;
+
     TextView mResult_DuctLeakage, mResult_EnvelopLeakage;
     TextView mText_Qn, mText_QnOut, mText_Ach50;
 
@@ -89,14 +89,6 @@ public class ResultWCI_Step extends BaseFragment implements View.OnClickListener
 
         mText_Comments = (EditText) mContentView.findViewById(R.id.txt_comments);
 
-        mText_Pressure = (MaskedEditText) mContentView.findViewById(R.id.txt_pressure);
-        mText_Pressure.setMask("##.#");
-        mText_Pressure.setPlaceholder('0');
-
-        mText_Flow = (MaskedEditText) mContentView.findViewById(R.id.txt_flow);
-        mText_Flow.setMask("####.#");
-        mText_Flow.setPlaceholder('0');
-
         mResult_DuctLeakage = (TextView) mContentView.findViewById(R.id.txt_result_duct_leakage);
         mResult_EnvelopLeakage = (TextView) mContentView.findViewById(R.id.txt_result_envelop_leakage);
 
@@ -117,39 +109,7 @@ public class ResultWCI_Step extends BaseFragment implements View.OnClickListener
 
         restoreForm();
 
-        mText_Pressure.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                refreshResult(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        mText_Flow.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                refreshResult(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
     }
 
@@ -182,8 +142,7 @@ public class ResultWCI_Step extends BaseFragment implements View.OnClickListener
         AppData.INSPECTION.overall_comments = comments;
         AppData.INSPECTION.signature.copy(mPicture_Signature);
 
-        AppData.INSPECTION.house_pressure = Utils.getFloat(mText_Pressure.getText().toString());
-        AppData.INSPECTION.flow = Utils.getFloat(mText_Flow.getText().toString());
+
 
         refreshResult(true);
     }
@@ -191,13 +150,14 @@ public class ResultWCI_Step extends BaseFragment implements View.OnClickListener
     @Override
     public void restoreForm() {
         mText_Comments.setText(AppData.INSPECTION.overall_comments);
+        mText_Comments.setHorizontallyScrolling(false);
+        mText_Comments.setMaxLines(Integer.MAX_VALUE);
 
         mPicture_Signature.copy(AppData.INSPECTION.signature);
         mText_Signature.setText(mPicture_Signature.getDisplayedText());
 
         mText_Qn.setText(AppData.INSPECTION.qn+"");
-        mText_Pressure.setText(AppData.INSPECTION.house_pressure+"");
-        mText_Flow.setText(AppData.INSPECTION.flow+"");
+
 
         refreshResult(false);
     }
@@ -213,16 +173,8 @@ public class ResultWCI_Step extends BaseFragment implements View.OnClickListener
     }
 
     private boolean refreshResult(boolean warning) {
-        float pressure = 0;
-        float flow = 0;
-
-        String text = mText_Pressure.getText().toString();
-        if (text.length()>0)
-            pressure = Utils.getFloat(text);
-
-        text = mText_Flow.getText().toString();
-        if (text.length()>0)
-            flow = Utils.getFloat(text);
+        float pressure = AppData.INSPECTION.house_pressure ;
+        float flow = AppData.INSPECTION.flow ;
 
         emptyResult(1);
         emptyResult(2);
@@ -448,6 +400,9 @@ public class ResultWCI_Step extends BaseFragment implements View.OnClickListener
         protected Void doInBackground(String... params) {
             String filepath = applyImageRotation(params[0]);
             filepath = scaleImage(filepath);
+
+
+
 
             return null;
         }

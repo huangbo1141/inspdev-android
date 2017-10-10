@@ -41,7 +41,7 @@ public class RequestedInspectionAdapter extends ArrayAdapter<RequestedInspection
         final RequestedInspectionInfo item = getItem(position);
         if (item!=null) {
             String job_number = "Job Number: " + item.job_number;
-            type.setText(InspectionUtils.getTitle(item.type));
+            type.setText(InspectionUtils.getTitle(item.type,null));
 
             community.setText("Community: " + item.community_name);
             address.setText("Address: " + item.address);

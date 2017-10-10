@@ -31,53 +31,16 @@
             <EditText
                 android:id="@+id/txt_comments"
                 style="@style/EditorStyle_Margin"
-                android:maxLines="1"
-                android:gravity="top"
+                android:lines="100"
+                android:singleLine="false"
+                android:gravity="top|left"
+                android:scrollbars="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/multiple_editor_height" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/form_padding"
-            android:paddingRight="@dimen/form_padding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/LabelStyle"
-                android:text="@string/house_pressure"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.idragonit.inspection.components.MaskedEditText
-                android:id="@+id/txt_pressure"
-                style="@style/EditorStyle_Margin"
-                android:maxLines="1"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/editor_height" />
-
-            <TextView
-                style="@style/LabelStyle"
-                android:text="@string/flow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.idragonit.inspection.components.MaskedEditText
-                android:id="@+id/txt_flow"
-                style="@style/EditorStyle_Margin"
-                android:maxLines="1"
-                android:text="0000.0"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/editor_height" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
+                <LinearLayout
             android:orientation="vertical"
             android:layout_marginBottom="@dimen/component_margin"
             android:paddingLeft="@dimen/form_padding"

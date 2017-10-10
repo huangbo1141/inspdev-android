@@ -37,6 +37,7 @@ import com.idragonit.inspection.fragments.Email_Step;
 import com.idragonit.inspection.fragments.Initials_Step;
 import com.idragonit.inspection.fragments.JobNumber_Step;
 import com.idragonit.inspection.fragments.Location_Step;
+import com.idragonit.inspection.fragments.PhotoAndField_Step;
 import com.idragonit.inspection.fragments.ResultWCI_Step;
 import com.idragonit.inspection.fragments.Result_Step;
 import com.idragonit.inspection.fragments.Sync;
@@ -111,7 +112,7 @@ public class InspectionActivity extends FragmentActivity implements Bridge, View
     }
 
     private void init() {
-        String title = InspectionUtils.getTitle(AppData.KIND);
+        String title = InspectionUtils.getTitle(AppData.KIND,null);
         if (title.length()>0)
             mText_Title.setText(title);
         else if (AppData.MODE != Constants.MODE_SYNC)
@@ -208,7 +209,7 @@ public class InspectionActivity extends FragmentActivity implements Bridge, View
 
         hideKeyboard();
 
-        String title = InspectionUtils.getTitle(AppData.KIND);
+        String title = InspectionUtils.getTitle(AppData.KIND,fragment);
         if (title.length()>0)
             mText_Title.setText(title);
         else if (AppData.MODE == Constants.MODE_SYNC)
@@ -225,6 +226,14 @@ public class InspectionActivity extends FragmentActivity implements Bridge, View
         if (fragment instanceof BasicWCI_Step) {
             step = Constants.STEP__BASIC_WCI;
 
+            mBtn_Next.setVisibility(View.VISIBLE);
+        }
+
+        if (fragment instanceof PhotoAndField_Step){
+            step = Constants.STEP__PHOTO_WCI;
+
+            progress = 18;
+            mBtn_Prev.setVisibility(View.VISIBLE);
             mBtn_Next.setVisibility(View.VISIBLE);
         }
 
@@ -377,12 +386,18 @@ public class InspectionActivity extends FragmentActivity implements Bridge, View
             // wci
             case Constants.STEP__BASIC_WCI:
                 break;
-
+            case Constants.STEP__PHOTO_WCI:
+                fragment = (BaseFragment) getSupportFragmentManager().findFragmentByTag(PhotoAndField_Step.class.getSimpleName());
+                if (fragment!=null) {
+                    fragment.saveForm();
+                    switchTo(BasicWCI_Step.newInstance(), true);
+                }
+                break;
             case Constants.STEP__UNIT_WCI:
                 fragment = (BaseFragment) getSupportFragmentManager().findFragmentByTag(UnitWCI_Step.class.getSimpleName());
                 if (fragment!=null) {
                     fragment.saveForm();
-                    switchTo(BasicWCI_Step.newInstance(), true);
+                    switchTo(PhotoAndField_Step.newInstance(), true);
                 }
                 break;
 
@@ -466,6 +481,13 @@ public class InspectionActivity extends FragmentActivity implements Bridge, View
             // wci
             case Constants.STEP__BASIC_WCI:
                 fragment = (BaseFragment) getSupportFragmentManager().findFragmentByTag(BasicWCI_Step.class.getSimpleName());
+                if (fragment!=null && fragment.validateForm()) {
+                    fragment.saveForm();
+                    switchTo(PhotoAndField_Step.newInstance(), true);
+                }
+                break;
+            case Constants.STEP__PHOTO_WCI:
+                fragment = (BaseFragment) getSupportFragmentManager().findFragmentByTag(PhotoAndField_Step.class.getSimpleName());
                 if (fragment!=null && fragment.validateForm()) {
                     fragment.saveForm();
                     switchTo(UnitWCI_Step.newInstance(), true);

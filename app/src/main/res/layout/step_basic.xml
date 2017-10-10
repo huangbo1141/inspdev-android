@@ -18,6 +18,22 @@
             style="@style/LabelStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/permit_number"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/txt_permit_number"
+            style="@style/EditorStyle_Margin"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_height"
+            android:inputType="number"
+            android:maxLines="1"
+            android:visibility="gone"/>
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/community" />
 
         <EditText

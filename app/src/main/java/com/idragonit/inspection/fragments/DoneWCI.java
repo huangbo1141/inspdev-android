@@ -142,7 +142,7 @@ public class DoneWCI extends BaseFragment {
                 // Modified by Bongbong. 20160416
                 String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/front";
                 String path = AppData.INSPECTION.front_building.image;
-                HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -200,7 +200,7 @@ public class DoneWCI extends BaseFragment {
                 // Modified by Bongbong. 20160416
                 String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/signature";
                 String path = AppData.INSPECTION.signature.image;
-                HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -259,7 +259,7 @@ public class DoneWCI extends BaseFragment {
                 // Modified by Bongbong. 20160416
                 String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/testing";
                 String path = AppData.INSPECTION.testing_setup.image;
-                HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -317,7 +317,7 @@ public class DoneWCI extends BaseFragment {
                 // Modified by Bongbong. 20160416
                 String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/manometer";
                 String path = AppData.INSPECTION.manometer.image;
-                HttpHelper.UploadFile(url, path, new HttpHelper.OnResponseListener() {
+                HttpHelper.UploadFile(getActivity(), url, path, new HttpHelper.OnResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -376,6 +376,8 @@ public class DoneWCI extends BaseFragment {
 
             req.put("requested_id", AppData.INSPECTION_REQUESTED_ID);
 
+            req.put("app_version", DeviceUtils.getVersion(getActivity()));
+            req.put("permit_number", AppData.INSPECTION.permit_number);
             req.put("job_number", AppData.INSPECTION.job_number);
             req.put("community", AppData.INSPECTION.community_name);
             req.put("lot", AppData.INSPECTION.lot);
@@ -528,8 +530,9 @@ public class DoneWCI extends BaseFragment {
 //        mBridge.switchTo(Step5.newInstance(), true);
 
         InspectionDatabase db = InspectionDatabase.getInstance(getActivity());
+        boolean deletesucc = false;
         if (AppData.MODE == Constants.MODE_SYNC) {
-            db.deleteInspection(AppData.INSPECTION_ID_LOCAL);
+            deletesucc = db.deleteInspection(AppData.INSPECTION_ID_LOCAL);
         }
 
         db.insertInspection(Utils.checkNull(AppData.USER.id, 0), AppData.INSPECTION_REQUESTED_ID, AppData.INSPECTION_EDIT_ID, AppData.KIND, AppData.INSPECTION.job_number, AppData.getInspection(), AppData.getEmail(), AppData.getLocation("Left"), AppData.getLocation("Right"), AppData.getLocation("Front"), AppData.getLocation("Back"), AppData.getComment(), AppData.getUnit());

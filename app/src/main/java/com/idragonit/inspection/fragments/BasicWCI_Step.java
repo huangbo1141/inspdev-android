@@ -63,7 +63,7 @@ import cz.msebera.android.httpclient.Header;
  */
 public class BasicWCI_Step extends BaseFragment implements View.OnClickListener, PicturePickerListener {
 
-    EditText mText_Community, mText_Lot, mText_Address, mText_JobNumber;
+    EditText mText_Community, mText_Lot, mText_Address, mText_JobNumber,mText_PermitNumber;
     TextView mText_Location, mText_FrontBuilding;
 
     Spinner mSpinner_ReadyInspection;
@@ -99,6 +99,7 @@ public class BasicWCI_Step extends BaseFragment implements View.OnClickListener,
         View mContentView = inflater.inflate(R.layout.step_basic_wci, container, false);
 
         mText_Community = (EditText) mContentView.findViewById(R.id.txt_community);
+        mText_PermitNumber = (EditText) mContentView.findViewById(R.id.txt_permit_number);
         mText_Lot = (EditText) mContentView.findViewById(R.id.txt_lot);
         mText_Address = (EditText) mContentView.findViewById(R.id.txt_address);
         mText_JobNumber = (EditText) mContentView.findViewById(R.id.txt_job_number);
@@ -169,8 +170,10 @@ public class BasicWCI_Step extends BaseFragment implements View.OnClickListener,
         AppData.INSPECTION.ready_inspection = mSpinner_ReadyInspection.getSelectedItemPosition() == 1 ? true : false;
 
         AppData.INSPECTION.front_building.copy(mPicture_FrontBuilding);
-        AppData.INSPECTION.testing_setup.copy(mPicture_TestingSetup);
-        AppData.INSPECTION.manometer.copy(mPicture_Manometer);
+
+        AppData.INSPECTION.permit_number = mText_PermitNumber.getText().toString();
+//        AppData.INSPECTION.testing_setup.copy(mPicture_TestingSetup);
+//        AppData.INSPECTION.manometer.copy(mPicture_Manometer);
     }
 
     @Override
@@ -178,6 +181,7 @@ public class BasicWCI_Step extends BaseFragment implements View.OnClickListener,
         mText_JobNumber.setText(AppData.INSPECTION.job_number);
 
         mText_Community.setText(AppData.INSPECTION.getCommunityName());
+        mText_PermitNumber.setText(AppData.INSPECTION.permit_number);
         mText_Lot.setText(AppData.INSPECTION.lot);
         mText_Address.setText(AppData.INSPECTION.address);
 
@@ -361,7 +365,7 @@ public class BasicWCI_Step extends BaseFragment implements View.OnClickListener,
             mPicture_TestingSetup.init();
             mText_TestingSetup.setText(mPicture_TestingSetup.getDisplayedText());
         }
-        if (AppData.TAKEN_KIND==1) {
+        if (AppData.TAKEN_KIND==3) {
             mPicture_Manometer.init();
             mText_Manometer.setText(mPicture_Manometer.getDisplayedText());
         }

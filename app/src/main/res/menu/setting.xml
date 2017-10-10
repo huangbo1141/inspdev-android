@@ -15,5 +15,10 @@
         android:id="@+id/menu_logout"
         android:icon="@drawable/logout"
         android:title="  Log Out"/>
+
+    <item
+        android:id="@+id/menu_about"
+        android:icon="@drawable/about"
+        android:title="  About"/>
     
 </menu>

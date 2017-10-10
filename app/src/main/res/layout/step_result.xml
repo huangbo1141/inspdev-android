@@ -30,8 +30,9 @@
             <EditText
                 android:id="@+id/txt_comments"
                 style="@style/EditorStyle_Margin"
-                android:maxLines="1"
-                android:gravity="top"
+                android:lines="100"
+                android:singleLine="false"
+                android:gravity="top|left"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/multiple_editor_height" />
 

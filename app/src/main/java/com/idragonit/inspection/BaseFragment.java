@@ -203,7 +203,7 @@ public abstract class BaseFragment extends Fragment {
     public abstract void saveForm();
     public abstract void restoreForm();
 
-	public String applyImageRotation(String image) {
+	public String applyImageRotation(String image ) {
 		try {
 			ExifInterface ei = new ExifInterface(image);
 			int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
@@ -216,7 +216,12 @@ public abstract class BaseFragment extends Fragment {
                     image = rotateImage(image, 180);
 					break;
 			}
+			if (AppData.saveGallery){
+                ImageUtils.addImageToGallery(image,getActivity());
+            }
+
 		} catch (Exception e){}
+
 
 		return image;
 	}
@@ -262,7 +267,9 @@ public abstract class BaseFragment extends Fragment {
                 }
             }
 
-		} catch (Exception e){}
+		} catch (Exception e){
+            e.printStackTrace();
+        }
 
 		return image;
 	}

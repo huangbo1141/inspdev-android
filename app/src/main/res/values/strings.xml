@@ -43,6 +43,7 @@
     <string name="assigned_inspection">Assigned Inspections</string>
 
     <string name="community">Community</string>
+    <string name="permit_number">Permit Number</string>
     <string name="lot">Lot #</string>
     <string name="address">Address</string>
     <string name="job_number">Job Number</string>

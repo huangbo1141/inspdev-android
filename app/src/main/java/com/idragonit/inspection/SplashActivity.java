@@ -41,7 +41,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         init();
-        checkPermission();
+//        checkPermission();
         checkLogin();
     }
 

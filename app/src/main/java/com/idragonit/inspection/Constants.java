@@ -8,14 +8,15 @@ public class Constants {
 
     public final static int CONNECTION_TIMEOUT = 60;
 
+    public static int CREDITS = 100;
     public final static String APP_NAME = "Inspections";
     public final static String[] INSPECTIONS = {
             "", "Drainage Plane", "Lath",
     };
 
-//    public final static String API__BASEPATH = "https://insptest.e3bldg.com/api/";
+//    public final static String API__BASEPATH = "http://inspdev.e3bldg.com/api/";
 //    public final static String API__BASEPATH = "https://inspections.e3bldg.com/api/";
-    public final static String API__BASEPATH = "https://192.168.1.133/inspdev/api/";
+    public final static String API__BASEPATH = "http://192.168.1.121:88/inspdev/api/";
 
     public final static String API__USER_REGISTER = "v1/user/register";
     public final static String API__USER_UPDATE = "v1/user/update";
@@ -62,6 +63,7 @@ public class Constants {
     public final static int STEP__UNIT_WCI = 101;
     public final static int STEP__RESULT_WCI = 102;
     public final static int STEP__DONE_WCI = 103;
+    public final static int STEP__PHOTO_WCI = 104;
 
     public final static int INSPECTION_NONE = 0;
     public final static int INSPECTION_DRAINAGE = 1;
@@ -115,4 +117,6 @@ public class Constants {
     public final static int[] RESOLUTION_WIDTH = {0, 1600, 1536, 1200, 1152, 1152, 768, 768, 600, 640, 480, 480, 480, 320, 240, 240};
     public final static int[] RESOLUTION_HEIGHT = {0, 2560, 2048, 1920, 1920, 1536, 1280, 1024, 1024, 960, 854, 800, 640, 480, 432, 400};
 
+    public final static String SYS_HOUSE_PRESSURE = "house_pressure";
+    public final static String SYS_HOME_MESSAGE1 = "app_home_message1";
 }
