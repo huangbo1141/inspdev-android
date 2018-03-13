@@ -1,7 +1,9 @@
 package com.idragonit.inspection;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -29,6 +32,7 @@ import com.idragonit.inspection.components.RequestedInspectionAdapter;
 import com.idragonit.inspection.models.RequestedInspectionInfo;
 import com.idragonit.inspection.models.SyncInfo;
 import com.idragonit.inspection.utils.DeviceUtils;
+import com.idragonit.inspection.utils.InspectionUtils;
 import com.idragonit.inspection.utils.SecurityUtils;
 import com.idragonit.inspection.utils.StorageUtils;
 import com.idragonit.inspection.utils.Utils;
@@ -40,6 +44,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 import yuku.iconcontextmenu.IconContextMenu;
@@ -51,10 +59,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     ImageView mMenu;
 
-    ListView mListView;
-    RequestedInspectionAdapter mAdapter;
-
     RelativeLayout mRoot;
+    LinearLayout scrollContent;
+    List<ViewHolder> listRows = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         setContentView(R.layout.activity_main);
 
-        mAdapter = new RequestedInspectionAdapter(this, this);
-        mListView = (ListView) findViewById(R.id.list);
-        mListView.setAdapter(mAdapter);
+        scrollContent = (LinearLayout) findViewById(R.id.scrollContent);
 
         mRoot = (RelativeLayout) findViewById(R.id.root);
 //        findViewById(R.id.btn_drainage).setOnClickListener(this);
@@ -225,6 +230,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         AppData.INSPECTION.design_location = requested.design_location;
 
         AppData.INSPECTION.is_building_unit = requested.is_building_unit;
+        AppData.INSPECTION.reinspection = requested.reinspection;
 
         if (AppData.KIND == Constants.INSPECTION_WCI) {
             AppData.initUnit();
@@ -348,60 +354,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         String message = Utils.checkNull(status.getString("message"));
                         if (code == 0) {
                             JSONArray obj = response.getJSONArray("response");
-                            mAdapter.clear();
+                            scrollContent.removeAllViews();
+                            listRows = new ArrayList<>();
                             db.deleteRequestedInspection();
 
                             for (int i=0; i<obj.length(); i++) {
                                 JSONObject result = obj.getJSONObject(i);
-
-                                RequestedInspectionInfo item = new RequestedInspectionInfo();
-                                item.id = Utils.checkNull(result.getString("id"), 0);
-                                item.type = Utils.checkNull(result.getString("category"), 0);
-
-                                item.address = Utils.checkNull(result.getString("address"));
-                                item.job_number = Utils.checkNull(result.getString("job_number"));
-
-                                if (item.type==Constants.INSPECTION_WCI) {
-                                    item.community = "";
-
-                                    item.city = Utils.checkNull(result.getString("city_duct"));
-                                    item.area = Utils.checkNull(result.getString("area"), 0);
-                                    item.volume = Utils.checkNull(result.getString("volume"), 0);
-                                    item.qn = Utils.checkNull(result.getString("qn"), 0.0f);
-
-                                    item.wall_area = Utils.checkNull(result.getString("wall_area"), 0);
-                                    item.ceiling_area = Utils.checkNull(result.getString("ceiling_area"), 0);
-                                    item.design_location = Utils.checkNull(result.getString("design_location"));
-                                } else {
-                                    item.community = item.job_number.substring(0, 4);
-                                }
-
-                                item.lot = Utils.checkNull(result.getString("lot"));
-
-                                item.community_name = Utils.checkNull(result.getString("community_name"));
-                                item.inspection_date = Utils.checkNull(result.getString("requested_at"));
-
-                                item.region = Utils.checkNull(result.getString("region"), 0);
-                                item.field_manager = Utils.checkNull(result.getString("manager_id"), 0);
-
-                                if (result.has("is_building_unit")) {
-                                    if (Utils.checkNull(result.getString("is_building_unit"), 0)==1)
-                                        item.is_building_unit = true;
-                                }
-
-                                if (result.has("edit_inspection_id")) {
-                                    item.edit_inspection_id = Utils.checkNull(result.getString("edit_inspection_id"), 0);
-                                }
-
+                                RequestedInspectionInfo item = RequestedInspectionInfo.parseJson(result);
                                 if (item.id>0 && db.getInspection(item.id)==null) {
                                     db.insertRequestedInspection(item.id, item.type, item.job_number, item.inspection_date, item.inspection_date, item.toTemp());
-                                    mAdapter.add(item);
+
+                                    LayoutInflater inflater = getLayoutInflater();
+                                    View view = inflater.inflate(R.layout.layout_requested_inspection, null);
+                                    ViewHolder viewHolder = new ViewHolder(view);
+                                    scrollContent.addView(viewHolder.mView);
+                                    viewHolder.setData(item);
+
+                                    listRows.add(viewHolder);
                                 }
                             }
 
-                            mAdapter.notifyDataSetChanged();
-
-                            if (mAdapter.getCount()==0)
+                            if (listRows.size()==0)
                                 showMessage("No Assigned Inspections");
 
                         } else {
@@ -446,16 +419,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void loadInspectionsFromLocalStorage() {
 //        showLoading(Constants.MSG_LOADING);
-
-        mAdapter.clear();
+        listRows = new ArrayList<>();
+        scrollContent.removeAllViews();
         final InspectionDatabase db = InspectionDatabase.getInstance(this);
         ArrayList<RequestedInspectionInfo> inspections = db.loadRequestedInspection();
         for (RequestedInspectionInfo inspection : inspections) {
-            if (db.getInspection(inspection.id)==null)
-                mAdapter.add(inspection);
-        }
+            if (db.getInspection(inspection.id)==null){
+                //
+                LayoutInflater inflater = getLayoutInflater();
+                View view = inflater.inflate(R.layout.layout_requested_inspection, null);
+                ViewHolder viewHolder = new ViewHolder(view);
+                scrollContent.addView(viewHolder.mView);
+                viewHolder.setData(inspection);
 
-        mAdapter.notifyDataSetChanged();
+                listRows.add(viewHolder);
+            }
+        }
         hideLoading();
     }
 
@@ -518,4 +497,76 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     };
 
+    public class ViewHolder {
+
+        private View mView,layFuture;
+
+        TextView job,type,community,address,date;
+        LinearLayout mark;
+
+        public Object item;
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (item != null && item instanceof RequestedInspectionInfo) {
+                    RequestedInspectionInfo item = (RequestedInspectionInfo) ViewHolder.this.item;
+                    onSubmit(item);
+                }
+            }
+        };
+
+        public ViewHolder(View localView) {
+
+            mView = localView;
+            job = (TextView) localView.findViewById(R.id.txt_job_number);
+            type = (TextView) localView.findViewById(R.id.txt_type);
+            community = (TextView) localView.findViewById(R.id.txt_community);
+            address = (TextView) localView.findViewById(R.id.txt_address);
+            date = (TextView) localView.findViewById(R.id.txt_date);
+            mark = (LinearLayout) localView.findViewById(R.id.layMark);
+            layFuture = localView.findViewById(R.id.layFuture);
+
+        }
+
+        public void setData(final Object data) {
+            job.setText("");
+            type.setText("");
+            community.setText("");
+            address.setText("");
+            date.setText("");
+            item = data;
+            if (data instanceof RequestedInspectionInfo) {
+                final RequestedInspectionInfo item = (RequestedInspectionInfo) data;
+                String job_number = "Job Number: " + item.job_number;
+                type.setText(InspectionUtils.getTitle(item.type,null));
+
+                community.setText("Community: " + item.community_name);
+                address.setText("Address: " + item.address);
+
+                job_number += ", LOT: " + item.lot;
+
+                job.setText(job_number);
+
+                date.setText("Requested: " + item.inspection_date);
+
+                mView.setOnClickListener(onClickListener);
+
+                if (item.type == 3){
+                    // wci
+                    if (item.inspection_date.equals(Utils.getToday("-"))){
+                        // today item
+                        // no need to specify
+                    }else{
+                        layFuture.setVisibility(View.VISIBLE);
+                        mView.setBackgroundColor(Color.parseColor("#a0111111"));
+                    }
+                }
+            }
+        }
+
+        @Override
+        public String toString() {
+            return super.toString();
+        }
+    }
 }

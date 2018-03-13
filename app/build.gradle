@@ -8,8 +8,8 @@ android {
         applicationId "com.idragonit.drainageplain"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 371
-        versionName "3.7.1"
+        versionCode 391
+        versionName "3.9.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

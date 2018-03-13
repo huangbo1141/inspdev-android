@@ -1,5 +1,6 @@
 package com.idragonit.inspection.models;
 
+import com.idragonit.inspection.Constants;
 import com.idragonit.inspection.utils.Utils;
 
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ public class RequestedInspectionInfo {
 
     public String lot;
     public String job_number;
+    public int reinspection = 0;
     public String inspection_date;
 
     public int region;
@@ -88,6 +90,7 @@ public class RequestedInspectionInfo {
             obj.put("is_building_unit", is_building_unit ? "1" : "0");
 
             obj.put("edit_id", edit_inspection_id+"");
+            obj.put("reinspection", reinspection);
 
             return obj.toString();
         } catch (Exception e){}
@@ -124,6 +127,59 @@ public class RequestedInspectionInfo {
             if (obj.has("edit_id")) {
                 edit_inspection_id = Utils.checkNull(obj.getString("edit_id"), 0);
             }
+            if (obj.has("reinspection")){
+                reinspection = Utils.checkNull(obj.getString("reinspection"),0);
+            }
+
         } catch (Exception e){}
+    }
+
+    public static RequestedInspectionInfo parseJson(JSONObject result){
+        try{
+            RequestedInspectionInfo item = new RequestedInspectionInfo();
+
+            item.id = Utils.checkNull(result.getString("id"), 0);
+            item.type = Utils.checkNull(result.getString("category"), 0);
+
+            item.address = Utils.checkNull(result.getString("address"));
+            item.job_number = Utils.checkNull(result.getString("job_number"));
+            item.reinspection = Utils.checkNull(result.getString("reinspection"),0);
+
+            if (item.type== Constants.INSPECTION_WCI) {
+                item.community = "";
+
+                item.city = Utils.checkNull(result.getString("city_duct"));
+                item.area = Utils.checkNull(result.getString("area"), 0);
+                item.volume = Utils.checkNull(result.getString("volume"), 0);
+                item.qn = Utils.checkNull(result.getString("qn"), 0.0f);
+
+                item.wall_area = Utils.checkNull(result.getString("wall_area"), 0);
+                item.ceiling_area = Utils.checkNull(result.getString("ceiling_area"), 0);
+                item.design_location = Utils.checkNull(result.getString("design_location"));
+            } else {
+                item.community = item.job_number.substring(0, 4);
+            }
+
+            item.lot = Utils.checkNull(result.getString("lot"));
+
+            item.community_name = Utils.checkNull(result.getString("community_name"));
+            item.inspection_date = Utils.checkNull(result.getString("requested_at"));
+
+            item.region = Utils.checkNull(result.getString("region"), 0);
+            item.field_manager = Utils.checkNull(result.getString("manager_id"), 0);
+
+            if (result.has("is_building_unit")) {
+                if (Utils.checkNull(result.getString("is_building_unit"), 0)==1)
+                    item.is_building_unit = true;
+            }
+
+            if (result.has("edit_inspection_id")) {
+                item.edit_inspection_id = Utils.checkNull(result.getString("edit_inspection_id"), 0);
+            }
+            return item;
+        }catch (Exception ex){
+
+        }
+        return null;
     }
 }

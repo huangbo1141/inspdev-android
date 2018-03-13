@@ -541,8 +541,15 @@ public class InspectionActivity extends FragmentActivity implements Bridge, View
                     fragment.saveForm();
                     if (AppData.INSPECTION.ready_inspection)
                         switchTo(Location_Step.newInstance(), true);
-                    else
-                        switchTo(Result_Step.newInstance(), true);
+                    else{
+                        if (AppData.INSPECTION.reinspection == 1){
+                            switchTo(Location_Step.newInstance(), true);
+                        }else{
+                            switchTo(Result_Step.newInstance(), true);
+                        }
+
+                    }
+
                 }
                 break;
 

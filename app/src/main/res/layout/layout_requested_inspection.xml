@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_marginTop="@dimen/component_margin"
     android:layout_marginBottom="@dimen/component_margin"
     android:orientation="vertical"
@@ -7,80 +7,159 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/layout_content"
+        android:orientation="vertical"
+        android:layout_weight="1.0"
+        android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/txt_type"
+            style="@style/LabelStyle_Small.More"
+            android:maxLines="1"
+            android:gravity="center"
+            android:textSize="16dip"
+            android:layout_marginTop="@dimen/form_padding"
+            android:layout_marginBottom="@dimen/form_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
+
         <LinearLayout
-            android:id="@+id/layout_content"
-            android:orientation="vertical"
-            android:layout_weight="1.0"
-            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/component_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txt_type"
+                android:id="@+id/txt_date"
                 style="@style/LabelStyle_Small.More"
                 android:maxLines="1"
-                android:gravity="center"
-                android:textSize="16dip"
-                android:layout_marginTop="@dimen/form_padding"
-                android:layout_marginBottom="@dimen/form_padding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </TextView>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/component_margin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/txt_date"
-                    style="@style/LabelStyle_Small.More"
-                    android:maxLines="1"
-                    android:textSize="12.0dip"
-                    android:gravity="right"
-                    android:layout_weight="1.0"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </TextView>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txt_job_number"
-                style="@style/LabelStyle_Small.More"
-                android:maxLines="1"
-                android:layout_marginBottom="@dimen/form_padding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </TextView>
-
-            <TextView
-                android:id="@+id/txt_community"
-                style="@style/LabelStyle_Small.More"
-                android:maxLines="1"
-                android:textSize="14.0dip"
-                android:layout_marginBottom="@dimen/component_margin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </TextView>
-
-            <TextView
-                android:id="@+id/txt_address"
-                style="@style/LabelStyle_Small.More"
-                android:maxLines="1"
-                android:textSize="14.0dip"
-                android:layout_marginBottom="@dimen/component_margin"
+                android:gravity="right"
+                android:layout_weight="1.0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </TextView>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/txt_job_number"
+            style="@style/LabelStyle_Small.More"
+            android:maxLines="1"
+            android:layout_marginBottom="@dimen/form_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txt_community"
+            style="@style/LabelStyle_Small.More"
+            android:maxLines="1"
+            android:textSize="14.0dip"
+            android:layout_marginBottom="@dimen/component_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <TextView
+            android:id="@+id/txt_address"
+            style="@style/LabelStyle_Small.More"
+            android:maxLines="1"
+            android:textSize="14.0dip"
+            android:layout_marginBottom="@dimen/component_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/layFuture"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:id="@+id/layMark">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="F"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="U"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="T"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="U"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="R"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="E"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

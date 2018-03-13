@@ -14,9 +14,10 @@ public class Constants {
             "", "Drainage Plane", "Lath",
     };
 
+//    public final static String API__BASEPATH = "https://insptest.e3bldg.com/api/";
 //    public final static String API__BASEPATH = "http://inspdev.e3bldg.com/api/";
 //    public final static String API__BASEPATH = "https://inspections.e3bldg.com/api/";
-    public final static String API__BASEPATH = "http://192.168.1.121:88/inspdev/api/";
+    public final static String API__BASEPATH = "http://192.168.1.108:88/inspdev/api/";
 
     public final static String API__USER_REGISTER = "v1/user/register";
     public final static String API__USER_UPDATE = "v1/user/update";
@@ -26,9 +27,9 @@ public class Constants {
 
     public final static String[] API__KIND = {  "",     "drainage",     "lath",  "wci"      };
 
-    public final static String API__CHECK_JOB = "v1/inspection/check/";
+    public final static String API__CHECK_JOB = "v1/inspection/check/";         // Line 223     542
     public final static String API__UPLOAD_PICTURE = "upload/";
-    public final static String API__INSPECTION = "v1/inspection/submit/";
+    public final static String API__INSPECTION = "v1/inspection/submit/";       // Line 380
     public final static String API__REQUESTED_INSPECTION = "v1/inspection/requested";
     public final static String API__EMAIL = "v1/send";
 

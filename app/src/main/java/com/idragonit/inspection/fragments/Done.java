@@ -20,6 +20,7 @@ import com.idragonit.inspection.MainActivity;
 import com.idragonit.inspection.R;
 import com.idragonit.inspection.models.CheckingInfo;
 import com.idragonit.inspection.models.CheckingItemInfo;
+import com.idragonit.inspection.models.PictureInfo;
 import com.idragonit.inspection.utils.DeviceUtils;
 import com.idragonit.inspection.utils.HttpHelper;
 import com.idragonit.inspection.utils.SecurityUtils;
@@ -55,6 +56,18 @@ public class Done extends BaseFragment {
     final int ACTION_STEP1__FRONT = 10001;
     final String MSG_STEP1__FRONT = "Uploading Picture of Front of Building.....";
     final String ERR_STEP1__FRONT = "Failed to Upload Picture of Front of Building.....";
+
+    final int ACTION_STEP1__RIGHT = 10102;
+    final String MSG_STEP1__RIGHT = "Uploading Picture of Right of Building.....";
+    final String ERR_STEP1__RIGHT = "Failed to Upload Picture of Right of Building.....";
+
+    final int ACTION_STEP1__LEFT = 10103;
+    final String MSG_STEP1__LEFT = "Uploading Picture of Left of Building.....";
+    final String ERR_STEP1__LEFT = "Failed to Upload Picture of Left of Building.....";
+
+    final int ACTION_STEP1__BACK = 10104;
+    final String MSG_STEP1__BACK = "Uploading Picture of Back of Building.....";
+    final String ERR_STEP1__BACK = "Failed to Upload Picture of Back of Building.....";
 
     final int ACTION_STEP1__SIGNATURE = 10002;
     final String MSG_STEP1__SIGNATURE = "Uploading Signature.....";
@@ -140,8 +153,8 @@ public class Done extends BaseFragment {
     }
 
 
-    private void uploadFrontImage() {
-        if (AppData.INSPECTION.front_building.mode == Constants.PICTURE_LOCAL) {
+    private void uploadImage(String mode, final int modetype, final PictureInfo building) {
+        if (building.mode == Constants.PICTURE_LOCAL) {
             mLoading.setText(MSG_STEP1__FRONT);
 
             if (!DeviceUtils.isInternetAvailable(getActivity())) {
@@ -153,15 +166,14 @@ public class Done extends BaseFragment {
             try {
                 ///////////////////////////////////////////////////////////////////
                 // Modified by Bongbong. 20160416
-                String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/front";
-                String path = AppData.INSPECTION.front_building.image;
+                String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/" + mode;
+                String path = building.image;
                 HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
                         if (response == null) {
-                            showMessage(ERR_STEP1__FRONT);
-                            mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
+                            showUploadErrorMessage(modetype);
                             return;
                         }
 
@@ -172,29 +184,68 @@ public class Done extends BaseFragment {
                             if (code == 0) {
                                 String url = Utils.checkNull(response.getString("url"));
                                 String path = Utils.checkNull(response.getString("path"));
-
-                                AppData.INSPECTION.front_building.image = url;
-                                AppData.INSPECTION.front_building.mode = Constants.PICTURE_SERVER;
-
-                                mHandler.sendEmptyMessageDelayed(ACTION_STEP1__SIGNATURE, ACTION_SUCCESS_TIME);
-
+                                building.image = url;
+                                building.mode = Constants.PICTURE_SERVER;
+                                goNextStepForUploadImage(modetype);
                             } else {
-                                showMessage(ERR_STEP1__FRONT);
-                                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
+                                showUploadErrorMessage(modetype);
                             }
                         } catch (Exception e) {
-                            showMessage(ERR_STEP1__FRONT);
-                            mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
+                            showUploadErrorMessage(modetype);
                         }
                     }
                 });
             } catch (Exception e) {
-                showMessage(ERR_STEP1__FRONT);
-                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
+                showUploadErrorMessage(modetype);
             }
 
         } else {
-            mHandler.sendEmptyMessageDelayed(ACTION_STEP1__SIGNATURE, ACTION_SUCCESS_TIME);
+            goNextStepForUploadImage(modetype);
+        }
+    }
+    public void goNextStepForUploadImage(int modetype){
+        switch (modetype){
+            case 0:{
+
+                mHandler.sendEmptyMessageDelayed(ACTION_STEP1__RIGHT, ACTION_SUCCESS_TIME);
+                break;
+            }
+            case 1:{
+                mHandler.sendEmptyMessageDelayed(ACTION_STEP1__LEFT, ACTION_SUCCESS_TIME);
+                break;
+            }
+            case 2:{
+                mHandler.sendEmptyMessageDelayed(ACTION_STEP1__BACK, ACTION_SUCCESS_TIME);
+                break;
+            }
+            case 3:{
+                mHandler.sendEmptyMessageDelayed(ACTION_STEP1__SIGNATURE, ACTION_SUCCESS_TIME);
+                break;
+            }
+        }
+    }
+    private void showUploadErrorMessage(int modetype){
+        switch (modetype){
+            case 0:{
+                showMessage(ERR_STEP1__FRONT);
+                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
+                break;
+            }
+            case 1:{
+                showMessage(ERR_STEP1__RIGHT);
+                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
+                break;
+            }
+            case 2:{
+                showMessage(ERR_STEP1__LEFT);
+                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
+                break;
+            }
+            case 3:{
+                showMessage(ERR_STEP1__BACK);
+                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
+                break;
+            }
         }
     }
 
@@ -881,7 +932,15 @@ public class Done extends BaseFragment {
             req.put("longitude", AppData.INSPECTION.location.longitude);
             req.put("accuracy", AppData.INSPECTION.location.accuracy);
             req.put("front_building", AppData.INSPECTION.front_building.mode==Constants.PICTURE_SERVER ? AppData.INSPECTION.front_building.image : "");
-            req.put("house_ready", AppData.INSPECTION.ready_inspection ? 1 : 0);
+            req.put("right_building", AppData.INSPECTION.right_building.mode==Constants.PICTURE_SERVER ? AppData.INSPECTION.right_building.image : "");
+            req.put("left_building", AppData.INSPECTION.left_building.mode==Constants.PICTURE_SERVER ? AppData.INSPECTION.left_building.image : "");
+            req.put("back_building", AppData.INSPECTION.back_building.mode==Constants.PICTURE_SERVER ? AppData.INSPECTION.back_building.image : "");
+            if (AppData.INSPECTION.reinspection == 1 && AppData.INSPECTION.result == 3){        // here 3 is fail
+                req.put("house_ready", 0);
+            }else{
+                req.put("house_ready", AppData.INSPECTION.ready_inspection ? 1 : 0);
+            }
+
             req.put("overall_comments", AppData.INSPECTION.overall_comments);
             req.put("result_code", AppData.INSPECTION.result);
             req.put("signature", AppData.INSPECTION.signature.mode==Constants.PICTURE_SERVER ? AppData.INSPECTION.signature.image : "");
@@ -936,7 +995,11 @@ public class Done extends BaseFragment {
             req.put("comments", comments);
 
             parameter = req.toString();
-        } catch (Exception e){}
+        } catch (Exception e){
+            e.printStackTrace();
+
+            return;
+        }
 
         RequestParams params = new RequestParams();
         params.put("user_id", SecurityUtils.encodeKey(AppData.USER.id));
@@ -1071,9 +1134,17 @@ public class Done extends BaseFragment {
 
 
                 case ACTION_STEP1__FRONT:
-                    uploadFrontImage();
+                    uploadImage("front",0,AppData.INSPECTION.front_building);
                     break;
-
+                case ACTION_STEP1__RIGHT:
+                    uploadImage("right",1,AppData.INSPECTION.right_building);
+                    break;
+                case ACTION_STEP1__LEFT:
+                    uploadImage("left",2,AppData.INSPECTION.left_building);
+                    break;
+                case ACTION_STEP1__BACK:
+                    uploadImage("back",3,AppData.INSPECTION.back_building);
+                    break;
 
                 case ACTION_STEP1__SIGNATURE:
                     uploadSignature();

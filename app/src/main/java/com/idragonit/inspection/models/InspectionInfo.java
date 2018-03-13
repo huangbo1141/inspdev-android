@@ -25,6 +25,9 @@ public class InspectionInfo {
     public boolean ready_inspection;
     public LocationInfo location;
     public PictureInfo front_building;
+    public PictureInfo right_building;
+    public PictureInfo left_building;
+    public PictureInfo back_building;
 
     public String overall_comments;
     public String inspection_date_last;
@@ -61,6 +64,7 @@ public class InspectionInfo {
     public int result_envelop_leakage;
 
     public boolean is_building_unit;
+    public int reinspection;
 
 
     public InspectionInfo() {
@@ -78,6 +82,9 @@ public class InspectionInfo {
         ready_inspection = false;
         location = new LocationInfo();
         front_building = new PictureInfo();
+        right_building = new PictureInfo();
+        left_building = new PictureInfo();
+        back_building = new PictureInfo();
 
         overall_comments = "";
         inspection_date = Utils.getTodayForInspection();
@@ -114,6 +121,7 @@ public class InspectionInfo {
         ach50 = "";
 
         is_building_unit = false;
+        reinspection = 0;
     }
 
     public void init() {
@@ -134,6 +142,21 @@ public class InspectionInfo {
             front_building = new PictureInfo();
         else
             front_building.init();
+
+        if (right_building == null)
+            right_building = new PictureInfo();
+        else
+            right_building.init();
+
+        if (left_building == null)
+            left_building = new PictureInfo();
+        else
+            left_building.init();
+
+        if (back_building == null)
+            back_building = new PictureInfo();
+        else
+            back_building.init();
 
         if (location==null)
             location = new LocationInfo();
@@ -194,6 +217,7 @@ public class InspectionInfo {
         ach50 = "";
 
         is_building_unit = false;
+        reinspection = 0;
 
         if (AppData.sys_energy_inspection.containsKey(Constants.SYS_HOUSE_PRESSURE)){
             String pressure = (String) AppData.sys_energy_inspection.get(Constants.SYS_HOUSE_PRESSURE);
@@ -258,6 +282,7 @@ public class InspectionInfo {
             result.put("ach50", ach50+"");
 
             result.put("is_bu", is_building_unit ? "1" : "0");
+            result.put("reinspection",reinspection);
 
             if (community!=null){
                 result.put("community",community);
@@ -369,6 +394,11 @@ public class InspectionInfo {
                 }
             }catch (Exception eddfd) {}
 
+            try{
+                reinspection = Utils.checkNull(result.getString("reinspection"), 0);
+            }catch (Exception ex){
+
+            }
 
             try{
                 community = result.getString("community");

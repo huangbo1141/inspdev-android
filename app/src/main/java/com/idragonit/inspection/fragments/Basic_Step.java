@@ -74,6 +74,7 @@ public class Basic_Step extends BaseFragment implements View.OnClickListener, Da
 
     PictureInfo mPicture_FrontBuilding;
 
+
     boolean bFirst;
 
     public Basic_Step() {
@@ -234,6 +235,10 @@ public class Basic_Step extends BaseFragment implements View.OnClickListener, Da
 //            showMessage(getActivity(), R.string.error__empty_field_manager);
 //            return false;
             }
+        }
+        if (mPicture_FrontBuilding.image.length() == 0){
+            showMessage(R.string.error__empty_initials_picture_of_front_building);
+            return false;
         }
 
         return true;

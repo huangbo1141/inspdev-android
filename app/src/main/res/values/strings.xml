@@ -109,7 +109,7 @@
     <string name="error__empty_field_manager">Please Select Field Manager</string>
 
     <string name="error__empty_initials">Please Input Inspector Initials</string>
-
+    <string name="error__empty_initials_picture_of_front_building">Please Input Picture of Front of Building</string>
     <string name="alert__success">Successfully submitted!</string>
     <string name="alert__failed">Failed to submit. Please try again later!</string>
 

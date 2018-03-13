@@ -119,6 +119,7 @@ public class Utils {
         return checkNull(string, DEFAULT_STRING);
     }
 
+
 	/**
 	 * Convert object to string.
 	 * If string is null then return default value, else no changes.
