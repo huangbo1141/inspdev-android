@@ -32,6 +32,18 @@ public class InspectionUtils {
                 }
 
                 return "Energy Inspection";
+            case Constants.INSPECTION_PULTE_DUCT:
+                if (fragment!=null){
+                    if (fragment instanceof BasicWCI_Step){
+                        return "Pulte Duct Inspection";
+                    }else  if (fragment instanceof PhotoAndField_Step){
+                        return "Pulte Duct Blower Door Test";
+                    }else  if (fragment instanceof UnitWCI_Step){
+                        return "Pulte Duct Leakage Test";
+                    }
+                }
+
+                return "Pulte Duct Inspection";
         }
 
         return "";

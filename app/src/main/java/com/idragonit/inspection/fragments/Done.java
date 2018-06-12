@@ -1,6 +1,9 @@
 package com.idragonit.inspection.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.idragonit.inspection.AppData;
@@ -30,7 +34,13 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URI;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -68,6 +78,10 @@ public class Done extends BaseFragment {
     final int ACTION_STEP1__BACK = 10104;
     final String MSG_STEP1__BACK = "Uploading Picture of Back of Building.....";
     final String ERR_STEP1__BACK = "Failed to Upload Picture of Back of Building.....";
+
+    final int ACTION_STEP1__FRONT_2 = 10100;
+    final String MSG_STEP1__FRONT_2 = "Uploading Picture2 of Front of Building.....";
+    final String ERR_STEP1__FRONT_2 = "Failed to Upload Picture of Front of Building.....";
 
     final int ACTION_STEP1__SIGNATURE = 10002;
     final String MSG_STEP1__SIGNATURE = "Uploading Signature.....";
@@ -155,7 +169,33 @@ public class Done extends BaseFragment {
 
     private void uploadImage(String mode, final int modetype, final PictureInfo building) {
         if (building.mode == Constants.PICTURE_LOCAL) {
-            mLoading.setText(MSG_STEP1__FRONT);
+            switch (modetype){
+                case 0:{
+                    mLoading.setText(MSG_STEP1__FRONT);
+                    break;
+                }
+                case 1:{
+                    mLoading.setText(MSG_STEP1__RIGHT);
+                    break;
+                }
+                case 2:{
+                    mLoading.setText(MSG_STEP1__LEFT);
+                    break;
+                }
+                case 3:{
+                    mLoading.setText(MSG_STEP1__BACK);
+                    break;
+                }
+                case 4:{
+                    mLoading.setText(MSG_STEP1__FRONT_2);
+                    break;
+                }
+                default:
+                    mLoading.setText("Unknown status");
+                    mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
+                    break;
+            }
+
 
             if (!DeviceUtils.isInternetAvailable(getActivity())) {
                 showMessage(Constants.MSG_CONNECTION);
@@ -167,13 +207,13 @@ public class Done extends BaseFragment {
                 ///////////////////////////////////////////////////////////////////
                 // Modified by Bongbong. 20160416
                 String url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE + Constants.API__KIND[AppData.KIND] + "/" + mode;
-                String path = building.image;
+                final String path = building.image;
                 HttpHelper.UploadFile(getActivity(),url, path, new HttpHelper.OnResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
                         if (response == null) {
-                            showUploadErrorMessage(modetype);
+                            showUploadErrorMessage(modetype,path);
                             return;
                         }
 
@@ -188,15 +228,19 @@ public class Done extends BaseFragment {
                                 building.mode = Constants.PICTURE_SERVER;
                                 goNextStepForUploadImage(modetype);
                             } else {
-                                showUploadErrorMessage(modetype);
+                                showUploadErrorMessage(modetype,path);
                             }
                         } catch (Exception e) {
-                            showUploadErrorMessage(modetype);
+                            showUploadErrorMessage(modetype,path);
                         }
                     }
+
+
+
+
                 });
             } catch (Exception e) {
-                showUploadErrorMessage(modetype);
+                showUploadErrorMessage(modetype,"");
             }
 
         } else {
@@ -206,7 +250,6 @@ public class Done extends BaseFragment {
     public void goNextStepForUploadImage(int modetype){
         switch (modetype){
             case 0:{
-
                 mHandler.sendEmptyMessageDelayed(ACTION_STEP1__RIGHT, ACTION_SUCCESS_TIME);
                 break;
             }
@@ -219,34 +262,32 @@ public class Done extends BaseFragment {
                 break;
             }
             case 3:{
+                mHandler.sendEmptyMessageDelayed(ACTION_STEP1__FRONT_2, ACTION_SUCCESS_TIME);
+                break;
+            }
+            case 4:{
                 mHandler.sendEmptyMessageDelayed(ACTION_STEP1__SIGNATURE, ACTION_SUCCESS_TIME);
+                break;
+            }
+            default:{
+                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
                 break;
             }
         }
     }
-    private void showUploadErrorMessage(int modetype){
-        switch (modetype){
-            case 0:{
-                showMessage(ERR_STEP1__FRONT);
-                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
-                break;
-            }
-            case 1:{
-                showMessage(ERR_STEP1__RIGHT);
-                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
-                break;
-            }
-            case 2:{
-                showMessage(ERR_STEP1__LEFT);
-                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
-                break;
-            }
-            case 3:{
-                showMessage(ERR_STEP1__BACK);
-                mHandler.sendEmptyMessageDelayed(ACTION_FAILED, ACTION_FAILED_TIME);
-                break;
-            }
+    private void showUploadErrorMessage(int modetype,String path){
+        Message ms = mHandler.obtainMessage(ACTION_FAILED);
+        JSONObject js = new JSONObject();
+        try {
+            js.put("mode",modetype);
+            js.put("type","upload");
+            js.put("path",path);
+            ms.obj = js;
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        mHandler.sendMessageDelayed(ms,ACTION_FAILED_TIME);
     }
 
 
@@ -935,11 +976,15 @@ public class Done extends BaseFragment {
             req.put("right_building", AppData.INSPECTION.right_building.mode==Constants.PICTURE_SERVER ? AppData.INSPECTION.right_building.image : "");
             req.put("left_building", AppData.INSPECTION.left_building.mode==Constants.PICTURE_SERVER ? AppData.INSPECTION.left_building.image : "");
             req.put("back_building", AppData.INSPECTION.back_building.mode==Constants.PICTURE_SERVER ? AppData.INSPECTION.back_building.image : "");
-            if (AppData.INSPECTION.reinspection == 1 && AppData.INSPECTION.result == 3){        // here 3 is fail
-                req.put("house_ready", 0);
-            }else{
-                req.put("house_ready", AppData.INSPECTION.ready_inspection ? 1 : 0);
-            }
+            req.put("front_building_2", AppData.INSPECTION.front_building_2.mode==Constants.PICTURE_SERVER ? AppData.INSPECTION.front_building_2.image : "");
+
+//            if (AppData.INSPECTION.reinspection == 1 && AppData.INSPECTION.result == 3){        // here 3 is fail
+//                req.put("house_ready", 0);
+//            }else{
+//                req.put("house_ready", AppData.INSPECTION.ready_inspection ? 1 : 0);
+//            }
+
+            req.put("house_ready", AppData.INSPECTION.ready_inspection ? 1 : 0);
 
             req.put("overall_comments", AppData.INSPECTION.overall_comments);
             req.put("result_code", AppData.INSPECTION.result);
@@ -1086,7 +1131,20 @@ public class Done extends BaseFragment {
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(Constants.CONNECTION_TIMEOUT * 1000);
         client.setSSLSocketFactory(SecurityUtils.getSSLSocketFactory());
-        client.post(getActivity(), url, params, new JsonHttpResponseHandler());
+        client.post(getActivity(), url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if (statusCode==200 && response!=null) {
+                    try{
+                        JSONObject status = response.getJSONObject("status");
+                        JSONObject request = response.getJSONObject("request");
+                        int p = 0;
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
 
         mHandler.sendEmptyMessageDelayed(ACTION_DONE, ACTION_SUCCESS_TIME);
     }
@@ -1145,6 +1203,9 @@ public class Done extends BaseFragment {
                 case ACTION_STEP1__BACK:
                     uploadImage("back",3,AppData.INSPECTION.back_building);
                     break;
+                case ACTION_STEP1__FRONT_2:
+                    uploadImage("front2",4,AppData.INSPECTION.front_building_2);
+                    break;
 
                 case ACTION_STEP1__SIGNATURE:
                     uploadSignature();
@@ -1195,6 +1256,64 @@ public class Done extends BaseFragment {
                     break;
 
                 case ACTION_FAILED:
+                    if (msg.obj!=null && msg.obj instanceof JSONObject){
+                        JSONObject js = (JSONObject) msg.obj;
+                        try {
+                            String type = js.getString("type");
+                            if (type.equals("upload")){
+                                int mode = js.getInt("mode");
+                                String path = js.getString("path");
+                                String addmsg = "";
+                                try {
+                                    if(!path.isEmpty()){
+                                        Uri uri = Uri.fromFile(new File(path));
+                                        InputStream ims = getActivity().getContentResolver().openInputStream(uri);
+                                        // just display image in imageview
+                                        Bitmap bnm = BitmapFactory.decodeStream(ims);
+                                    }
+
+                                } catch (FileNotFoundException e) {
+
+                                    e.printStackTrace();
+                                    addmsg = "\nFile Not Founded in your Phone";
+                                }catch (Exception e) {
+
+                                    e.printStackTrace();
+                                }
+                                switch (mode){
+                                    case 0:{
+
+                                        Toast.makeText(getActivity(),ERR_STEP1__FRONT + addmsg,Toast.LENGTH_LONG).show();
+                                        break;
+                                    }
+                                    case 1:{
+                                        Toast.makeText(getActivity(),ERR_STEP1__RIGHT + addmsg,Toast.LENGTH_LONG).show();
+                                        break;
+                                    }
+                                    case 2:{
+                                        Toast.makeText(getActivity(),ERR_STEP1__LEFT + addmsg,Toast.LENGTH_LONG).show();
+                                        break;
+                                    }
+                                    case 3:{
+                                        Toast.makeText(getActivity(),ERR_STEP1__BACK + addmsg,Toast.LENGTH_LONG).show();
+                                        break;
+                                    }
+                                    case 4:{
+                                        Toast.makeText(getActivity(),ERR_STEP1__FRONT_2 + addmsg,Toast.LENGTH_LONG).show();
+                                        break;
+                                    }
+                                    default:{
+                                        Toast.makeText(getActivity(),"Unknown",Toast.LENGTH_LONG).show();
+                                        break;
+                                    }
+                                }
+                                //hgg
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
                     onFailed();
                     break;
 

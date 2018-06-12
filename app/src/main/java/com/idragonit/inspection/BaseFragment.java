@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -23,13 +24,23 @@ import android.widget.Toast;
 
 import com.idragonit.inspection.components.WaitingDialog;
 import com.idragonit.inspection.utils.ImageUtils;
+import com.idragonit.inspection.utils.SecurityUtils;
 import com.idragonit.inspection.utils.Utils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public abstract class BaseFragment extends Fragment {
@@ -129,7 +140,15 @@ public abstract class BaseFragment extends Fragment {
     public void takePictureFromCamera(int activityResult){
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getActivity(), getActivity().getApplicationContext().getPackageName() + ".provider", new File(AppData.TAKEN_PICTURE)));
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1){
+            // Do something for lollipop and above versions
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getActivity(), getActivity().getApplicationContext().getPackageName() + ".provider", new File(AppData.TAKEN_PICTURE)));
+        } else{
+            // do something for phones running an SDK before lollipop
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, new File(AppData.TAKEN_PICTURE));
+        }
+
 
         try {
             startActivityForResult(intent, activityResult);
@@ -139,15 +158,23 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void takePictureFromGallery(int activityResult){
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
+//        Intent intent = new Intent();
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        intent.setType("image/*");
+//
+//        try {
+//            startActivityForResult(intent, activityResult);
+//        } catch (ActivityNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            startActivityForResult(intent, activityResult);
-        } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
-        }
+        Intent intent = new Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(
+                Intent.createChooser(intent, "Select File"),
+                ACTIVITY_RESULT__GALLERY);
     }
 
     public String getFilePathFromActivityResultUri(Uri uri) {
@@ -232,6 +259,20 @@ public abstract class BaseFragment extends Fragment {
         return resolution;
     }
 
+    public boolean getSmsStatus(int id) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+        boolean status = sp.getBoolean(Constants.SMS_STATUS_KEY+String.valueOf(id),false);
+
+        return status;
+    }
+
+    public void setSmsStatus(int id) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(Constants.SMS_STATUS_KEY+String.valueOf(id),true);
+        editor.commit();
+    }
+
 	public String scaleImage(String image) {
 		try {
             int resolution = getResolution();
@@ -309,4 +350,131 @@ public abstract class BaseFragment extends Fragment {
         writeBitmap(path, retVal);
 		return path;
 	}
+
+	public void handleSms(int jobid){
+        String url = Constants.API__BASEPATH + "send_sms_from_android3";
+
+        RequestParams params = new RequestParams();
+        params.put("job_id", jobid);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(Constants.CONNECTION_TIMEOUT * 1000);
+        client.setSSLSocketFactory(SecurityUtils.getSSLSocketFactory());
+        client.post(getActivity(), url, params, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if (statusCode==200 && response!=null) {
+                    Log.i("handleSms Inspections", response.toString());
+
+                    hideLoading();
+
+                    try {
+                        JSONArray list_numbers = response.getJSONArray("list_numbers");
+                        for (int i=0;i<list_numbers.length();i++){
+                            Message message = new Message();
+                            message.what = 100;
+
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("response",response);
+                            jsonObject.put("index",i);
+                            message.obj = jsonObject;
+
+                            twilioHandler.sendMessageDelayed(message,i*2000);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+//                    showMessage(Constants.MSG_CONNECTION);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e("Basic_Step","onFailure");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.e("Basic_Step","onFailure");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                Log.e("Basic_Step","onFailure");
+            }
+        });
+    }
+
+    private Handler twilioHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 100:
+                    try{
+                        JSONObject jsonObject = (JSONObject) msg.obj;
+                        sendTwilio(jsonObject);
+                    }catch (Exception ex){
+                        Log.e("twilioHandler","onFailure");
+                    }
+                    break;
+            }
+        }
+
+    };
+    public void sendTwilio(JSONObject jsonObject){
+        try{
+            JSONObject response = jsonObject.getJSONObject("response");
+            JSONArray list_numbers = response.getJSONArray("list_numbers");
+            String sid = response.getString("sid");
+            String token = response.getString("token");
+            String from = response.getString("from");
+            String text = response.getString("text");
+            int index = jsonObject.getInt("index");
+
+
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.setTimeout(Constants.CONNECTION_TIMEOUT * 1000);
+            client.setSSLSocketFactory(SecurityUtils.getSSLSocketFactory());
+            client.setBasicAuth(sid, token);
+            String url = "https://api.twilio.com/2010-04-01/Accounts/"+sid+"/Messages";
+
+            RequestParams params = new RequestParams();
+            params.put("To",list_numbers.getString(index));
+            params.put("From",from);
+            params.put("Body",text);
+
+
+            client.post(getActivity(), url, params, new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    if (statusCode==200 && response!=null) {
+                        Log.i("sendTwilio Inspections", response.toString());
+
+                    } else {
+//                    showMessage(Constants.MSG_CONNECTION);
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.e("Basic_Step","onFailure");
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.e("Basic_Step","onFailure");
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    Log.e("Basic_Step","onFailure");
+                }
+            });
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

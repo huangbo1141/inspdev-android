@@ -109,7 +109,7 @@ public class Sync extends BaseFragment implements InspectionAdapterListener {
 
         AppData.setInspection(item.data);
 
-        if (AppData.KIND == Constants.INSPECTION_WCI) {
+        if (AppData.KIND == Constants.INSPECTION_WCI || AppData.KIND == Constants.INSPECTION_PULTE_DUCT) {
             AppData.initUnit();
             AppData.setUnit(item.unit);
 

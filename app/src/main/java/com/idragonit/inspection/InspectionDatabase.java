@@ -242,7 +242,7 @@ public class InspectionDatabase {
 
                     item.fromTemp(Utils.checkNull(cursor.getString(5)));
 
-                    if (item.type==Constants.INSPECTION_WCI) {
+                    if (item.type==Constants.INSPECTION_WCI || item.type==Constants.INSPECTION_PULTE_DUCT) {
                     } else {
                         item.community = item.job_number.substring(0, 4);
                         item.lot = item.job_number.substring(5, 7);
@@ -283,7 +283,7 @@ public class InspectionDatabase {
 
                 item.fromTemp(Utils.checkNull(cursor.getString(5)));
 
-                if (item.type==Constants.INSPECTION_WCI) {
+                if (item.type==Constants.INSPECTION_WCI || item.type==Constants.INSPECTION_PULTE_DUCT) {
                 } else {
                     item.community = item.job_number.substring(0, 4);
                     item.lot = item.job_number.substring(5, 7);

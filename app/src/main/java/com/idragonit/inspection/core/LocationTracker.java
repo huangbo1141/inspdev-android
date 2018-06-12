@@ -92,8 +92,7 @@ public class LocationTracker extends Service implements LocationListener {
         Location location = null;
 
         if (Build.VERSION.SDK_INT>=23) {
-            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 if (locationManager != null) {
                     locationManager.requestLocationUpdates(provider, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
@@ -118,7 +117,8 @@ public class LocationTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-
+        this.location = location;
+       Location p = getCurrentLocation();
     }
 
     @Override

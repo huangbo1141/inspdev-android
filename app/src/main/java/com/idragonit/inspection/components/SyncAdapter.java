@@ -37,6 +37,11 @@ public class SyncAdapter extends ArrayAdapter<SyncInfo> {
 
         final SyncInfo item = getItem(position);
         type.setText(item.type==1 ? "Drainage Plane Inspection" : "Lath Inspection");
+        if (item.type == 4){
+            type.setText("Pulte Duct Leakage Inspection");
+        }else if(item.type == 3){
+            type.setText("WCI Duct Leakage Inspection");
+        }
         job.setText("Job Number: " + item.job_number);
         date.setText("Last submited: " + Utils.toDisplayDate(item.date));
 

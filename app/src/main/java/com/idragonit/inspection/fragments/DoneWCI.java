@@ -52,7 +52,7 @@ public class DoneWCI extends BaseFragment {
     final int ACTION_START  = 10000;
 
     final int ACTION_STEP1__FRONT = 10001;
-    final String MSG_STEP1__FRONT = "Uploading Picture of Front of Building.....";
+    final String MSG_STEP1__FRONT = "Uploading Wci Picture of Front of Building.....";
     final String ERR_STEP1__FRONT = "Failed to Upload Picture of Front of Building.....";
 
     final int ACTION_STEP1__SIGNATURE = 10002;
@@ -519,7 +519,20 @@ public class DoneWCI extends BaseFragment {
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(Constants.CONNECTION_TIMEOUT * 1000);
         client.setSSLSocketFactory(SecurityUtils.getSSLSocketFactory());
-        client.post(getActivity(), url, params, new JsonHttpResponseHandler());
+        client.post(getActivity(), url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if (statusCode==200 && response!=null) {
+                    try{
+                        JSONObject status = response.getJSONObject("status");
+                        JSONObject request = response.getJSONObject("request");
+                        int p = 0;
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
 
         mHandler.sendEmptyMessageDelayed(ACTION_DONE, ACTION_SUCCESS_TIME);
     }

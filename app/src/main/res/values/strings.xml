@@ -198,4 +198,6 @@
     <string name="duct_leakage_result">Duct Leakage Result</string>
     <string name="envelop_leakage_result">Envelope Leakage Result</string>
 
+    <string name="crash_toast_text">Crash Report</string>
+
 </resources>

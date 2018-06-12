@@ -119,7 +119,7 @@ public class InspectionActivity extends FragmentActivity implements Bridge, View
             gotoMain();
 
         if (step == Constants.STEP__NONE) {
-            if (AppData.KIND == Constants.INSPECTION_WCI) {
+            if (AppData.KIND == Constants.INSPECTION_WCI || AppData.KIND == Constants.INSPECTION_PULTE_DUCT) {
                 if (AppData.MODE == Constants.MODE_NEW)
                     switchTo(BasicWCI_Step.newInstance(), true);
 
@@ -836,7 +836,7 @@ public class InspectionActivity extends FragmentActivity implements Bridge, View
     };
 
     private void onDone() {
-        if (AppData.KIND == Constants.INSPECTION_WCI) {
+        if (AppData.KIND == Constants.INSPECTION_WCI || AppData.KIND == Constants.INSPECTION_PULTE_DUCT) {
             switchTo(DoneWCI.newInstance(), true);
         } else {
             switchTo(Done.newInstance(), true);
@@ -859,6 +859,12 @@ public class InspectionActivity extends FragmentActivity implements Bridge, View
         try {
             JSONObject inspection = response.getJSONObject("inspection");
             JSONArray emails = response.getJSONArray("email");
+
+            if (response.has("schedule")){
+                JSONObject schedule = response.getJSONObject("schedule");
+                String manager_id = schedule.getString("manager_id");
+                inspection.put("fm",manager_id);
+            }
 
             JSONObject location = response.getJSONObject("location");
             String left = Utils.checkNull(location.getString("left"));

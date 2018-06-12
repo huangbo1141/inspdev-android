@@ -232,7 +232,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         AppData.INSPECTION.is_building_unit = requested.is_building_unit;
         AppData.INSPECTION.reinspection = requested.reinspection;
 
-        if (AppData.KIND == Constants.INSPECTION_WCI) {
+        if (AppData.KIND == Constants.INSPECTION_WCI || AppData.KIND == Constants.INSPECTION_PULTE_DUCT) {
             AppData.initUnit();
             AppData.INSPECTION.ready_inspection = true;
         } else {
@@ -292,12 +292,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                                     AppData.sys_energy_inspection.put(icode,ivalue);
                                 }
                             }
-                        } else {
-//                            showMessage(message);
                         }
                     }catch (Exception e) {
                         e.printStackTrace();
 //                        showMessage(Constants.MSG_FAILED);
+                    }
+
+                    try{
+                        JSONObject status = response.getJSONObject("status");
+                        int code = Utils.checkNull(status.getInt("code"), 0);
+                        if (code == 0) {
+                            JSONObject obj = response.getJSONObject("response");
+                            JSONArray rows =  obj.getJSONArray("sys_config");
+                            for (int i=0;i<rows.length(); i++){
+                                JSONObject iobj = (JSONObject) rows.get(i);
+                                String icode = iobj.getString("code");
+                                String ivalue = iobj.getString("value");
+                                if (icode!=null&& ivalue != null){
+                                    AppData.sys_config.put(icode,ivalue);
+                                }
+                            }
+                        }
+                    }catch (Exception e) {
+                        e.printStackTrace();
                     }
                 } else {
 //                    showMessage(Constants.MSG_CONNECTION);
@@ -322,6 +339,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
     }
 
+//    private void loadInspections(){
+//        RequestParams params = new RequestParams();
+//        params.put("inspection_id", SecurityUtils.encodeKey("14977"));
+//        params.put("user_id", SecurityUtils.encodeKey("2"));
+//
+//        AsyncHttpClient client = new AsyncHttpClient();
+//        client.setTimeout(Constants.CONNECTION_TIMEOUT * 1000);
+//        client.setSSLSocketFactory(SecurityUtils.getSSLSocketFactory());
+//        String url = Constants.API__BASEPATH + Constants.API__EMAIL;
+//        client.post(this, url, params, new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                if (statusCode==200 && response!=null) {
+//                    try{
+//                        JSONObject status = response.getJSONObject("status");
+//                        JSONObject request = response.getJSONObject("request");
+//                        int p = 0;
+//                    }catch (Exception ex){
+//                        ex.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//    }
     private void loadInspections() {
         showLoading(Constants.MSG_LOADING);
 
@@ -551,7 +592,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                 mView.setOnClickListener(onClickListener);
 
-                if (item.type == 3){
+                if (item.type == 3 || item.type == 1 || item.type == 2 || item.type == 4){
                     // wci
                     if (item.inspection_date.equals(Utils.getToday("-"))){
                         // today item

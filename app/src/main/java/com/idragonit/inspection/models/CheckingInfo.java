@@ -130,6 +130,11 @@ public class CheckingInfo implements Serializable{
         init();
         this.isComment = isComment;
 
+        String checklist_online_link = "www.google.com";
+        if (AppData.sys_config.containsKey("checklist_online_link")){
+            checklist_online_link = AppData.sys_config.get("checklist_online_link").toString();
+        }
+
         if (isComment) {
             if (AppData.KIND == Constants.INSPECTION_DRAINAGE) {
                 checking_list.add(new CheckingItemInfo(1, "Field manager responsible for repairs to exceptions"));
@@ -144,6 +149,9 @@ public class CheckingInfo implements Serializable{
                 checking_list.add(new CheckingItemInfo(10, "Lot has failed multiple times – mandated by process to pass lot even with deficiencies present upon inspection"));
                 checking_list.add(new CheckingItemInfo(11, "Architectural Plans not on site to verify detail"));
                 checking_list.add(new CheckingItemInfo(12, "Drywall Installed – Cannot verify items on interior"));
+
+                checking_list.add(new CheckingItemInfo(13, "Failed drainage plane inspection ONLY for missing windows. Proceed to Lath on areas not affected by missing windows. *Use online link for Special Window Inspection " + checklist_online_link));
+                checking_list.add(new CheckingItemInfo(14, "Failed drainage plane inspection for items other than missing windows. All non-window failures must be corrected and reinspected prior to proceeding to Lath.” *Use regular inspection request on the web portal to schedule reinspection"));
             }
 
             if (AppData.KIND == Constants.INSPECTION_LATH) {
@@ -157,6 +165,9 @@ public class CheckingInfo implements Serializable{
                 checking_list.add(new CheckingItemInfo(8, "Lot has failed multiple times – mandated by process to pass lot even with deficiencies present upon inspection"));
                 checking_list.add(new CheckingItemInfo(9, "Lot did not pass drainage plane inspection"));
                 checking_list.add(new CheckingItemInfo(10, "Architectural Plans not on site to verify detail"));
+
+                checking_list.add(new CheckingItemInfo(11, "Failed lath inspection ONLY on the basis of missing windows. OK to proceed to Lath on areas not affected by missing windows. *Use online link for Special Window Inspection " + checklist_online_link));
+                checking_list.add(new CheckingItemInfo(12, "Failed lath inspection on the basis of items other than missing windows. All non-window related items must be corrected and reinspected prior to proceeding to stucco.  *Use regular inspection request on the web portal to schedule reinspection"));
             }
         }
     }

@@ -9,6 +9,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -53,7 +54,7 @@ public class HttpHelper {
 
 //        url = Constants.API__BASEPATH + Constants.API__UPLOAD_PICTURE;
         AsyncHttpClient client = new AsyncHttpClient();
-        client.setTimeout(Constants.CONNECTION_TIMEOUT * 1000);
+        client.setTimeout(Constants.CONNECTION_TIMEOUT_FOR_UPLOAD * 1000);
         client.setSSLSocketFactory(SecurityUtils.getSSLSocketFactory());
         File myFile = new File(filePath);
         RequestParams params = new RequestParams();
@@ -65,13 +66,56 @@ public class HttpHelper {
             client.post(context,url,params,new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                    super.onSuccess(statusCode, headers, response);
+                    super.onSuccess(statusCode, headers, response);
                     listener.onResponse(response);
                 }
 
                 @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                    super.onSuccess(statusCode, headers, response);
+                    listener.onResponse(null);
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        listener.onResponse(jsonObject);
+                    }catch (Exception ex){
+                        listener.onResponse(null);
+                    }
+
+                }
+
+
+                @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                    super.onFailure(statusCode, headers, responseString, throwable);
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    listener.onResponse(null);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    listener.onResponse(null);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    listener.onResponse(null);
+                }
+
+
+                @Override
+                public void onCancel() {
+                    super.onCancel();
+                    listener.onResponse(null);
+                }
+
+                @Override
+                public void onUserException(Throwable error) {
+                    super.onUserException(error);
                     listener.onResponse(null);
                 }
             });

@@ -396,7 +396,11 @@ public class Result_Step extends BaseFragment implements View.OnClickListener, D
         String path = StorageUtils.getAppDirectory();
         if (path.length()>0) {
             String filename = CalenderUtils.getTodayWith14Chars() + "_" + UUID.randomUUID().toString().replaceAll("-", "") + ".jpg";
-            AppData.TAKEN_PICTURE = path + "/" + filename;
+            if (path.endsWith("/")){
+                AppData.TAKEN_PICTURE = path + filename;
+            }else{
+                AppData.TAKEN_PICTURE = path + "/" + filename;
+            }
         }
     }
 
@@ -461,7 +465,11 @@ public class Result_Step extends BaseFragment implements View.OnClickListener, D
         String path = StorageUtils.getAppDirectory();
         if (path.length()>0) {
             String filename = CalenderUtils.getTodayWith14Chars() + "_" + UUID.randomUUID().toString().replaceAll("-", "") + ".jpg";
-            AppData.TAKEN_PICTURE = path + "/" + filename;
+            if (path.endsWith("/")){
+                AppData.TAKEN_PICTURE = path + filename;
+            }else{
+                AppData.TAKEN_PICTURE = path + "/" + filename;
+            }
             takePictureFromCamera(ACTIVITY_RESULT__CAMERA);
         }
     }

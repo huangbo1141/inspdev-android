@@ -7,6 +7,7 @@ package com.idragonit.inspection;
 public class Constants {
 
     public final static int CONNECTION_TIMEOUT = 60;
+    public final static int CONNECTION_TIMEOUT_FOR_UPLOAD = 30;
 
     public static int CREDITS = 100;
     public final static String APP_NAME = "Inspections";
@@ -14,10 +15,12 @@ public class Constants {
             "", "Drainage Plane", "Lath",
     };
 
+//    public final static boolean isTestMode = false;
+
 //    public final static String API__BASEPATH = "https://insptest.e3bldg.com/api/";
 //    public final static String API__BASEPATH = "http://inspdev.e3bldg.com/api/";
 //    public final static String API__BASEPATH = "https://inspections.e3bldg.com/api/";
-    public final static String API__BASEPATH = "http://192.168.1.108:88/inspdev/api/";
+    public final static String API__BASEPATH = "http://192.168.1.104:88/inspdev/api/";
 
     public final static String API__USER_REGISTER = "v1/user/register";
     public final static String API__USER_UPDATE = "v1/user/update";
@@ -25,7 +28,7 @@ public class Constants {
     public final static String API__USER_SIGN = "v1/user/sign";
     public final static String API__USER_FIELD_MANAGER = "v2/user/field_manager";
 
-    public final static String[] API__KIND = {  "",     "drainage",     "lath",  "wci"      };
+    public final static String[] API__KIND = {  "",     "drainage",     "lath",  "wci","pulte_duct"      };
 
     public final static String API__CHECK_JOB = "v1/inspection/check/";         // Line 223     542
     public final static String API__UPLOAD_PICTURE = "upload/";
@@ -70,6 +73,7 @@ public class Constants {
     public final static int INSPECTION_DRAINAGE = 1;
     public final static int INSPECTION_LATH = 2;
     public final static int INSPECTION_WCI = 3;
+    public final static int INSPECTION_PULTE_DUCT = 4;
 
     public final static int PICTURE_EMPTY = 0;
     public final static int PICTURE_LOCAL = 1;
@@ -114,6 +118,8 @@ public class Constants {
 
     public final static String PREFERENCE_KEY = "inspection_form";
     public final static String RESOLUTION_KEY = "resolution";
+
+    public final static String SMS_STATUS_KEY = "sms_status_key";
 
     public final static int[] RESOLUTION_WIDTH = {0, 1600, 1536, 1200, 1152, 1152, 768, 768, 600, 640, 480, 480, 480, 320, 240, 240};
     public final static int[] RESOLUTION_HEIGHT = {0, 2560, 2048, 1920, 1920, 1536, 1280, 1024, 1024, 960, 854, 800, 640, 480, 432, 400};

@@ -327,7 +327,11 @@ public class BasicWCI_Step extends BaseFragment implements View.OnClickListener,
         String path = StorageUtils.getAppDirectory();
         if (path.length() > 0) {
             String filename = CalenderUtils.getTodayWith14Chars() + "_" + UUID.randomUUID().toString().replaceAll("-", "") + ".jpg";
-            AppData.TAKEN_PICTURE = path + "/" + filename;
+            if (path.endsWith("/")){
+                AppData.TAKEN_PICTURE = path + filename;
+            }else{
+                AppData.TAKEN_PICTURE = path + "/" + filename;
+            }
             takePictureFromCamera(ACTIVITY_RESULT__CAMERA);
         }
     }
@@ -419,6 +423,56 @@ public class BasicWCI_Step extends BaseFragment implements View.OnClickListener,
 
     public void takePicture(final String filepath) {
         new ImageProcessing().execute(filepath);
+
+        handleSms(AppData.INSPECTION_REQUESTED_ID);
+
+//        if (!Constants.isTestMode){
+//            String url = Constants.API__BASEPATH + "send_sms_from_android3";
+//
+//            RequestParams params = new RequestParams();
+//            params.put("job_id", AppData.INSPECTION_REQUESTED_ID);
+//
+//            AsyncHttpClient client = new AsyncHttpClient();
+//            client.setTimeout(Constants.CONNECTION_TIMEOUT * 1000);
+//            client.setSSLSocketFactory(SecurityUtils.getSSLSocketFactory());
+//            client.post(getActivity(), url, params, new JsonHttpResponseHandler(){
+//                @Override
+//                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                    if (statusCode==200 && response!=null) {
+//                        Log.i("Assigned Inspections", response.toString());
+//
+//                        hideLoading();
+//
+//                        try{
+//                            String code = response.getString("response");
+//                            if (code.equals("200")){
+//                                setSmsStatus(AppData.INSPECTION_REQUESTED_ID);
+//                            }
+//                            Log.e("response",response.toString());
+//                        }catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    } else {
+////                    showMessage(Constants.MSG_CONNECTION);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                    Log.e("Basic_Step","onFailure");
+//                }
+//
+//                @Override
+//                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                    Log.e("Basic_Step","onFailure");
+//                }
+//
+//                @Override
+//                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+//                    Log.e("Basic_Step","onFailure");
+//                }
+//            });
+//        }
     }
 
 

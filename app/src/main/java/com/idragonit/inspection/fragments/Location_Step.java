@@ -43,7 +43,8 @@ public class Location_Step extends BaseFragment implements View.OnClickListener,
 
     PictureInfo mPicture_RightBuilding = new PictureInfo();
     PictureInfo mPicture_LeftBuilding = new PictureInfo();
-    PictureInfo mPicture_BackBuilding = new PictureInfo();;
+    PictureInfo mPicture_BackBuilding = new PictureInfo();
+    PictureInfo mPicture_FrontBuilding2 = new PictureInfo();
     int pictureMode = 0;
     String item = "";
 
@@ -116,12 +117,7 @@ public class Location_Step extends BaseFragment implements View.OnClickListener,
         }else{
             pictureMode = 4;
         }
-        if (pictureMode == 4){
-            goStep2();
-        }else{
-            showPictureMenu();
-        }
-
+        showPictureMenu();
     }
 
     private void addLocation(boolean isOmit, boolean isFront) {
@@ -181,6 +177,7 @@ public class Location_Step extends BaseFragment implements View.OnClickListener,
         AppData.INSPECTION.right_building.copy(mPicture_RightBuilding);
         AppData.INSPECTION.left_building.copy(mPicture_LeftBuilding);
         AppData.INSPECTION.back_building.copy(mPicture_BackBuilding);
+        AppData.INSPECTION.front_building_2.copy(mPicture_FrontBuilding2);
     }
 
     @Override
@@ -197,6 +194,7 @@ public class Location_Step extends BaseFragment implements View.OnClickListener,
         mPicture_RightBuilding.copy(AppData.INSPECTION.right_building);
         mPicture_LeftBuilding.copy(AppData.INSPECTION.left_building);
         mPicture_BackBuilding.copy(AppData.INSPECTION.back_building);
+        mPicture_FrontBuilding2.copy(AppData.INSPECTION.front_building_2);
 
         mAdapter.notifyDataSetChanged();
     }
@@ -211,7 +209,11 @@ public class Location_Step extends BaseFragment implements View.OnClickListener,
         String path = StorageUtils.getAppDirectory();
         if (path.length() > 0) {
             String filename = CalenderUtils.getTodayWith14Chars() + "_" + UUID.randomUUID().toString().replaceAll("-", "") + ".jpg";
-            AppData.TAKEN_PICTURE = path + "/" + filename;
+            if (path.endsWith("/")){
+                AppData.TAKEN_PICTURE = path + filename;
+            }else{
+                AppData.TAKEN_PICTURE = path + "/" + filename;
+            }
             takePictureFromCamera(ACTIVITY_RESULT__CAMERA);
         }
     }
@@ -242,6 +244,12 @@ public class Location_Step extends BaseFragment implements View.OnClickListener,
                 dialog.show();
                 break;
             }
+            case 4:{
+                // back
+                PicturePreviewDialog dialog = new PicturePreviewDialog(getActivity(), mPicture_FrontBuilding2);
+                dialog.show();
+                break;
+            }
         }
 
     }
@@ -264,6 +272,12 @@ public class Location_Step extends BaseFragment implements View.OnClickListener,
                 pictureInfo = mPicture_BackBuilding;
                 break;
             }
+            case 4:{
+                // front
+                pictureInfo = mPicture_FrontBuilding2;
+                break;
+            }
+
         }
         PicturePickerDialog dialog;
         if (pictureInfo.mode == Constants.PICTURE_EMPTY) {
@@ -290,6 +304,11 @@ public class Location_Step extends BaseFragment implements View.OnClickListener,
             case 3:{
                 // back
                 mPicture_BackBuilding.init();
+                break;
+            }
+            case 4:{
+                // back
+                mPicture_FrontBuilding2.init();
                 break;
             }
         }
@@ -335,6 +354,12 @@ public class Location_Step extends BaseFragment implements View.OnClickListener,
                     // back
                     mPicture_BackBuilding.mode = Constants.PICTURE_LOCAL;
                     mPicture_BackBuilding.image = file;
+                    break;
+                }
+                case 4:{
+                    // back
+                    mPicture_FrontBuilding2.mode = Constants.PICTURE_LOCAL;
+                    mPicture_FrontBuilding2.image = file;
                     break;
                 }
             }

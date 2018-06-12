@@ -261,6 +261,14 @@ public class Basic_Step extends BaseFragment implements View.OnClickListener, Da
         AppData.INSPECTION.permit_number = permit_number;
 
         AppData.INSPECTION.front_building.copy(mPicture_FrontBuilding);
+
+
+//        Log.d("inspection_id",SecurityUtils.encodeKey(AppData.INSPECTION_ID));
+//        Log.d("user_id",SecurityUtils.encodeKey(AppData.USER.id));
+//
+//        RequestParams params = new RequestParams();
+//        params.put("inspection_id", SecurityUtils.encodeKey(AppData.INSPECTION_ID));
+//        params.put("user_id", SecurityUtils.encodeKey(AppData.USER.id));
     }
 
     @Override
@@ -400,7 +408,12 @@ public class Basic_Step extends BaseFragment implements View.OnClickListener, Da
         String path = StorageUtils.getAppDirectory();
         if (path.length() > 0) {
             String filename = CalenderUtils.getTodayWith14Chars() + "_" + UUID.randomUUID().toString().replaceAll("-", "") + ".jpg";
-            AppData.TAKEN_PICTURE = path + "/" + filename;
+            if (path.endsWith("/")){
+                AppData.TAKEN_PICTURE = path + filename;
+            }else{
+                AppData.TAKEN_PICTURE = path + "/" + filename;
+            }
+
             takePictureFromCamera(ACTIVITY_RESULT__CAMERA);
         }
     }
@@ -471,6 +484,58 @@ public class Basic_Step extends BaseFragment implements View.OnClickListener, Da
 
     public void takePicture(final String filepath) {
         new ImageProcessing().execute(filepath);
+        // when take picture call url
+
+        handleSms(AppData.INSPECTION_REQUESTED_ID);
+
+//        if (!Constants.isTestMode){
+//            String url = Constants.API__BASEPATH + "send_sms_from_android";
+//
+//            RequestParams params = new RequestParams();
+//            params.put("job_id", AppData.INSPECTION_REQUESTED_ID);
+//
+//            AsyncHttpClient client = new AsyncHttpClient();
+//            client.setTimeout(Constants.CONNECTION_TIMEOUT * 1000);
+//            client.setSSLSocketFactory(SecurityUtils.getSSLSocketFactory());
+//            client.post(getActivity(), url, params, new JsonHttpResponseHandler(){
+//                @Override
+//                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                    if (statusCode==200 && response!=null) {
+//                        Log.i("Assigned Inspections", response.toString());
+//
+//                        hideLoading();
+//
+//                        try{
+//                            String code = response.getString("response");
+//                            if (code.equals("200")){
+//                                setSmsStatus(AppData.INSPECTION_REQUESTED_ID);
+//                            }
+//                            Log.e("response",response.toString());
+//                        }catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    } else {
+////                    showMessage(Constants.MSG_CONNECTION);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                    Log.e("Basic_Step","onFailure");
+//                }
+//
+//                @Override
+//                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                    Log.e("Basic_Step","onFailure");
+//                }
+//
+//                @Override
+//                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+//                    Log.e("Basic_Step","onFailure");
+//                }
+//            });
+//        }
+
     }
 
     private void loadRegionFromLocalStorage() {

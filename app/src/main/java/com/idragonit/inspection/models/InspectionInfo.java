@@ -24,10 +24,11 @@ public class InspectionInfo {
 
     public boolean ready_inspection;
     public LocationInfo location;
-    public PictureInfo front_building;
+    public PictureInfo front_building;  // meaning previous page front image
     public PictureInfo right_building;
     public PictureInfo left_building;
     public PictureInfo back_building;
+    public PictureInfo front_building_2;    // meaning front image like left,right level image
 
     public String overall_comments;
     public String inspection_date_last;
@@ -85,6 +86,7 @@ public class InspectionInfo {
         right_building = new PictureInfo();
         left_building = new PictureInfo();
         back_building = new PictureInfo();
+        front_building_2 = new PictureInfo();
 
         overall_comments = "";
         inspection_date = Utils.getTodayForInspection();
@@ -157,6 +159,11 @@ public class InspectionInfo {
             back_building = new PictureInfo();
         else
             back_building.init();
+
+        if (front_building_2 == null)
+            front_building_2 = new PictureInfo();
+        else
+            front_building_2.init();
 
         if (location==null)
             location = new LocationInfo();
@@ -248,6 +255,11 @@ public class InspectionInfo {
 
             result.put("loc", location.toJSON());
             result.put("front", front_building.toJSON());
+            result.put("left", left_building.toJSON());
+            result.put("right", right_building.toJSON());
+            result.put("back", back_building.toJSON());
+            result.put("front2", front_building_2.toJSON());
+
             result.put("sign", signature.toJSON());
 
             result.put("ex1", exception_1.toJSON());
@@ -335,6 +347,10 @@ public class InspectionInfo {
 
             location.initWithJSON(Utils.checkNull(result.getString("loc")));
             front_building.initWithJSON(Utils.checkNull(result.getString("front")));
+            right_building.initWithJSON(Utils.checkNull(result.getString("right")));
+            left_building.initWithJSON(Utils.checkNull(result.getString("left")));
+            back_building.initWithJSON(Utils.checkNull(result.getString("back")));
+            front_building_2.initWithJSON(Utils.checkNull(result.getString("front2")));
             signature.initWithJSON(Utils.checkNull(result.getString("sign")));
 
             exception_1.initWithJSON(Utils.checkNull(result.getString("ex1")));
@@ -417,7 +433,9 @@ public class InspectionInfo {
 
             }
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getResultString() {

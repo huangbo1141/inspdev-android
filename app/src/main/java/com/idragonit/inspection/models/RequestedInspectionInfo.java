@@ -145,7 +145,7 @@ public class RequestedInspectionInfo {
             item.job_number = Utils.checkNull(result.getString("job_number"));
             item.reinspection = Utils.checkNull(result.getString("reinspection"),0);
 
-            if (item.type== Constants.INSPECTION_WCI) {
+            if (item.type== Constants.INSPECTION_WCI || item.type== Constants.INSPECTION_PULTE_DUCT) {
                 item.community = "";
 
                 item.city = Utils.checkNull(result.getString("city_duct"));

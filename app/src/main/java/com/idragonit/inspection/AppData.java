@@ -45,6 +45,7 @@ public class AppData {
     public static StorageInfo STORAGE = new StorageInfo();
 
     public static Map<String,Object> sys_energy_inspection = new HashMap<>();
+    public static Map<String,Object> sys_config = new HashMap<>();
 
     public static void init() {
         MODE = Constants.MODE_NEW;
